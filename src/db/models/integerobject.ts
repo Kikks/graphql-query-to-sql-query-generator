@@ -11,12 +11,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
     id!: string;
 
     static associate(models: any) {
-      IntegerObject.belongsTo(models.OutputState, {
-        foreignKey: "IntegerObjectId",
-        as: "IntegerObject",
-      });
       IntegerObject.hasOne(models.IntegerInnerObject, {
-        as: "IntegerInnerObject",
+        as: "integer_object",
       });
     }
   }

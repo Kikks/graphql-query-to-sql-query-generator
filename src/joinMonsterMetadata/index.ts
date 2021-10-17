@@ -11,40 +11,73 @@ export default {
   FinalizedEpochs: {
     extensions: {
       joinMonster: {
-        sqlTable: '"FinalizedEpoches"',
+        sqlTable: '"FinalizedEpochs"',
         uniqueKey: "id",
-        sqlJoin: (finalizedEpochsTable: any, finalizedEpochTable: any) =>
-          `${finalizedEpochsTable}."FinalizedEpochId" = ${finalizedEpochTable}.id`,
+      },
+    },
+    fields: {
+      finalized_epochs: {
+        extensions: {
+          joinMonster: {
+            sqlTable: '"FinalizedEpochs"',
+            uniqueKey: "id",
+            sqlJoin: (finalizedEpochsTable: any, finalizedEpochTable: any) =>
+              `${finalizedEpochsTable}.id = ${finalizedEpochTable}."FinalizedEpochId"`,
+          },
+        },
       },
     },
   },
-  // IntegerBool: {
-  //   extensions: {
-  //     joinMonster: {
-  //       sqlTable: '"IntegerBools"',
-  //       uniqueKey: "id",
-  //       sqlBatch: {
-  //         thisKey: "id",
-  //         parentKey: "IntegerBoolId",
-  //       },
-  //     },
-  //   },
-  // },
-  // IntegerInnerObject: {
-  //   extensions: {
-  //     joinMonster: {
-  //       sqlTable: '"IntegerInnerObjects"',
-  //       uniqueKey: "id",
-  //       sqlJoin: (integerInnerObjectTable: any, intergerBoolTable: any) =>
-  //         `${integerInnerObjectTable}."IntegerBoolId" = ${intergerBoolTable}.id`,
-  //       sqlBatch: {
-  //         thisKey: "id",
-  //         parentKey: "IntegerInnerObjectId",
-  //       },
-  //     },
-  //   },
-  // },
-
+  FinalizedEpoch: {
+    extensions: {
+      joinMonster: {
+        sqlTable: '"FinalizedEpoches"',
+        uniqueKey: "id",
+      },
+    },
+    fields: {
+      inputs: {
+        extensions: {
+          joinMonster: {
+            sqlTable: '"EpochInputStates"',
+            uniqueKey: "id",
+            sqlJoin: (finalizedEpochTable: any, epochInputStateTable: any) =>
+              `${finalizedEpochTable}.id = ${epochInputStateTable}."finalizedEpochId"`,
+         
+          },
+        },
+      },
+    },
+  },
+  EpochInputState: {
+    extensions: {
+      joinMonster: {
+        sqlTable: '"EpochInputStates"',
+        uniqueKey: "id",
+      },
+    },
+  },
+  AccumulatingEpoch: {
+    extensions: {
+      joinMonster: {
+        sqlTable: '"AccumulatingEpoches"',
+        uniqueKey: 'id'
+      }
+    },
+    fields: {
+      inputs: {
+        extensions: {
+          joinMonster: {
+            sqlTable: '"EpochInputStates"',
+            uniqueKey: 'id',
+            sqlJoin: (accumulatingEpochTable: any, epochInputStateTable: any) =>
+              `${accumulatingEpochTable}.id = ${epochInputStateTable}."accumulatingEpochId"`,
+          
+          }
+        }
+      }
+    }
+  },
   OutputState: {
     extensions: {
       joinMonster: {
@@ -59,7 +92,7 @@ export default {
             sqlTable: '"IntegerObjects"',
             uniqueKey: "id",
             sqlJoin: (outputStateTable: any, integerObjectTable: any) =>
-              `${outputStateTable}.id = ${integerObjectTable}."IntegerObjectId"`,
+              `${outputStateTable}.id = ${integerObjectTable}."outputStateId"`,
           },
         },
       },
@@ -71,17 +104,15 @@ export default {
         sqlTable: '"IntegerObjects"',
         uniqueKey: "id",
       },
-      fields: {
-        integer: {
-          extensions: {
-            joinMonster: {
-              sqlTable: '"IntegerInnerObjects"',
-              uniqueKey: "id",
-              sqlBatch: {
-                thisKey: '"IntegerInnerObjectId"',
-                parentKey: "id",
-              },
-            },
+    },
+    fields: {
+      integer: {
+        extensions: {
+          joinMonster: {
+            sqlTable: '"IntegerInnerObjects"',
+            uniqueKey: "id",
+            sqlJoin: (integerObjectTable: any, integerInnerObjectTable: any) =>
+              `${integerObjectTable}.id = ${integerInnerObjectTable}."integerObjectId"`
           },
         },
       },
@@ -93,17 +124,15 @@ export default {
         sqlTable: '"IntegerInnerObjects"',
         uniqueKey: "id",
       },
-      fields: {
-        integer: {
-          extensions: {
-            joinMonster: {
-              sqlTable: '"IntegerBools"',
-              uniqueKey: "id",
-              sqlBatch: {
-                thisKey: '"IntegerBoolId"',
-                parentKey: "id",
-              },
-            },
+    },
+    fields: {
+      integer: {
+        extensions: {
+          joinMonster: {
+            sqlTable: '"IntegerBools"',
+            uniqueKey: "id",
+            sqlJoin: (integerInnerObjectTable: any, interBoolTable: any) =>
+              `${integerInnerObjectTable}.id = ${interBoolTable}."integerInnerObjectId"`
           },
         },
       },

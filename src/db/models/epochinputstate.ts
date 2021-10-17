@@ -16,10 +16,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     inputs!: [number];
     input_contract_address!: string;
 
-    static associate(models: any) {
-      EpochInputState.belongsTo(models.FinalizedEpoch, { foreignKey: "id" });
-      EpochInputState.belongsTo(models.AccumulatingEpoch, { foreignKey: "id" });
-    }
+    static associate(models: any) {}
   }
   EpochInputState.init(
     {

@@ -1,6 +1,5 @@
 "use strict";
 import { Model, UUIDV4 } from "sequelize";
-import { EpochInputStateAttributes } from "./epochinputstate";
 
 interface AccumulatingEpochAttributes {
   id: string;
@@ -14,12 +13,11 @@ module.exports = (sequelize: any, DataTypes: any) => {
     implements AccumulatingEpochAttributes {
     id!: string;
     epoch_number!: number;
-    inputs!: EpochInputStateAttributes;
     descartesv2_contract_address!: string;
     input_contract_address!: string;
 
     static associate(models: any) {
-      AccumulatingEpoch.hasOne(models.EpochInputState, { foreignKey: "id" });
+      AccumulatingEpoch.hasOne(models.EpochInputState, { as: "accumulating_epoch" });
     }
   }
   AccumulatingEpoch.init(

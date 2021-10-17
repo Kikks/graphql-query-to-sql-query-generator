@@ -12,12 +12,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     id!: string;
     integer!: boolean;
 
-    static associate(models: any) {
-      IntegerBool.belongsTo(models.IntegerInnerObject, {
-        foreignKey: "IntegerBoolId",
-        as: "IntegerBool",
-      });
-    }
+    static associate(models: any) {}
   }
   IntegerBool.init(
     {

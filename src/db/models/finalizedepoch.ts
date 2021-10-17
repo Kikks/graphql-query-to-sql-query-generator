@@ -1,6 +1,5 @@
 "use strict";
 import { Model, UUIDV4 } from "sequelize";
-import { EpochInputStateAttributes } from "./epochinputstate";
 
 export interface FinalizedEpochAttributes {
   id: string;
@@ -16,13 +15,11 @@ module.exports = (sequelize: any, DataTypes: any) => {
     id!: string;
     epoch_number!: number;
     hash!: number;
-    inputs!: EpochInputStateAttributes;
     finalized_block_hash!: string;
     finalized_block_number!: number;
 
     static associate(models: any) {
-      FinalizedEpoch.belongsTo(models.FinalizedEpochs, { foreignKey: "id" });
-      FinalizedEpoch.hasOne(models.EpochInputState, { foreignKey: "id" });
+      FinalizedEpoch.hasOne(models.EpochInputState, { as: "finalized_epoch" });
     }
   }
   FinalizedEpoch.init(
@@ -38,7 +35,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
         allowNull: false,
       },
       hash: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       finalized_block_hash: {
@@ -46,7 +43,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
         allowNull: false,
       },
       finalized_block_number: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },

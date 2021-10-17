@@ -13,14 +13,13 @@ module.exports = (sequelize: any, DataTypes: any) => {
   class FinalizedEpochs extends Model<FinalizedEpochsAttributes>
     implements FinalizedEpochsAttributes {
     id!: string;
-    finalized_epochs!: [FinalizedEpochAttributes];
     initial_epoch!: number;
     descartesv2_contract_address!: string;
     input_contract_address!: string;
     
     static associate(models: any) {
       FinalizedEpochs.hasMany(models.FinalizedEpoch, {
-        foreignKey: 'id'
+        as: 'finalized_epochs'
       })
     }
   }

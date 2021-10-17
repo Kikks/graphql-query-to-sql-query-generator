@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.ts",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "start": "graphql-codegen --config codegen.yml && nodemon src/index.ts"
   },
   "keywords": [],
   "author": "",

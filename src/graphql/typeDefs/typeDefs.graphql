@@ -52,21 +52,24 @@ enum PhaseState {
 }
 
 type IntegerBool {
+  id: ID!
   integer: Boolean!
 }
 
 type IntegerInnerObject {
-  integer: IntegerBool!
+  id: ID!
+  integer: IntegerBool
 }
 
 type IntegerObject {
-  integer: IntegerBool!
+  id: ID!
+  integer: IntegerInnerObject
 }
 
 type OutputState {
   id: ID!
   output_address: String!
-  outputs: IntegerObject!
+  outputs: IntegerObject
 }
 
 type Query {

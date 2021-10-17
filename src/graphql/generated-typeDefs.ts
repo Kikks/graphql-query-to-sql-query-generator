@@ -63,24 +63,27 @@ export type ImmutableState = {
 
 export type IntegerBool = {
   __typename?: 'IntegerBool';
+  id: Scalars['ID'];
   integer: Scalars['Boolean'];
 };
 
 export type IntegerInnerObject = {
   __typename?: 'IntegerInnerObject';
-  integer: IntegerBool;
+  id: Scalars['ID'];
+  integer?: Maybe<IntegerBool>;
 };
 
 export type IntegerObject = {
   __typename?: 'IntegerObject';
-  integer: IntegerBool;
+  id: Scalars['ID'];
+  integer?: Maybe<IntegerInnerObject>;
 };
 
 export type OutputState = {
   __typename?: 'OutputState';
   id: Scalars['ID'];
   output_address: Scalars['String'];
-  outputs: IntegerObject;
+  outputs?: Maybe<IntegerObject>;
 };
 
 export enum PhaseState {
@@ -95,11 +98,11 @@ export enum PhaseState {
 export type Query = {
   __typename?: 'Query';
   constants?: Maybe<ImmutableState>;
-  current_epoch: AccumulatingEpoch;
-  current_phase: PhaseState;
-  finalized_epochs: FinalizedEpochs;
+  current_epoch?: Maybe<AccumulatingEpoch>;
+  current_phase?: Maybe<PhaseState>;
+  finalized_epochs?: Maybe<FinalizedEpochs>;
   initial_epoch: Scalars['Int'];
-  output_state: OutputState;
+  output_state?: Maybe<OutputState>;
 };
 
 
@@ -256,34 +259,37 @@ export type ImmutableStateResolvers<ContextType = any, ParentType extends Resolv
 };
 
 export type IntegerBoolResolvers<ContextType = any, ParentType extends ResolversParentTypes['IntegerBool'] = ResolversParentTypes['IntegerBool']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   integer?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type IntegerInnerObjectResolvers<ContextType = any, ParentType extends ResolversParentTypes['IntegerInnerObject'] = ResolversParentTypes['IntegerInnerObject']> = {
-  integer?: Resolver<ResolversTypes['IntegerBool'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  integer?: Resolver<Maybe<ResolversTypes['IntegerBool']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type IntegerObjectResolvers<ContextType = any, ParentType extends ResolversParentTypes['IntegerObject'] = ResolversParentTypes['IntegerObject']> = {
-  integer?: Resolver<ResolversTypes['IntegerBool'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  integer?: Resolver<Maybe<ResolversTypes['IntegerInnerObject']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type OutputStateResolvers<ContextType = any, ParentType extends ResolversParentTypes['OutputState'] = ResolversParentTypes['OutputState']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   output_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  outputs?: Resolver<ResolversTypes['IntegerObject'], ParentType, ContextType>;
+  outputs?: Resolver<Maybe<ResolversTypes['IntegerObject']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   constants?: Resolver<Maybe<ResolversTypes['ImmutableState']>, ParentType, ContextType>;
-  current_epoch?: Resolver<ResolversTypes['AccumulatingEpoch'], ParentType, ContextType>;
-  current_phase?: Resolver<ResolversTypes['PhaseState'], ParentType, ContextType>;
-  finalized_epochs?: Resolver<ResolversTypes['FinalizedEpochs'], ParentType, ContextType>;
+  current_epoch?: Resolver<Maybe<ResolversTypes['AccumulatingEpoch']>, ParentType, ContextType>;
+  current_phase?: Resolver<Maybe<ResolversTypes['PhaseState']>, ParentType, ContextType>;
+  finalized_epochs?: Resolver<Maybe<ResolversTypes['FinalizedEpochs']>, ParentType, ContextType>;
   initial_epoch?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  output_state?: Resolver<ResolversTypes['OutputState'], ParentType, ContextType>;
+  output_state?: Resolver<Maybe<ResolversTypes['OutputState']>, ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {

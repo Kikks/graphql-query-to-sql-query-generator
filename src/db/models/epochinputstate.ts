@@ -18,6 +18,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 
     static associate(models: any) {
       EpochInputState.belongsTo(models.FinalizedEpoch, { foreignKey: "id" });
+      EpochInputState.belongsTo(models.AccumulatingEpoch, { foreignKey: "id" });
     }
   }
   EpochInputState.init(

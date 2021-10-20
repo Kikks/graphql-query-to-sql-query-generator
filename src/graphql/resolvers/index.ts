@@ -13,10 +13,6 @@ import {
 import joinMonster from "join-monster";
 import db from "../../db/models";
 
-// Models
-const { model } = require("../../db/models/immutablestate");
-console.log(model);
-
 export const UserResolvers: IResolvers = {
 	Query: {
 		async constants(_: void, args, {}, info): Promise<ImmutableState> {

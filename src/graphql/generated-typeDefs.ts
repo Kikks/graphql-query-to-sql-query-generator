@@ -165,12 +165,12 @@ export enum PhaseState {
 
 export type Query = {
   __typename?: 'Query';
-  constants?: Maybe<ImmutableState>;
-  current_epoch?: Maybe<AccumulatingEpoch>;
-  current_phase?: Maybe<PhaseState>;
-  finalized_epochs?: Maybe<FinalizedEpochs>;
+  constants: Array<Maybe<ImmutableState>>;
+  current_epoch: Array<Maybe<AccumulatingEpoch>>;
+  current_phase: Array<Maybe<PhaseState>>;
+  finalized_epochs: Array<Maybe<FinalizedEpochs>>;
   initial_epoch: Scalars['Int'];
-  output_state?: Maybe<OutputState>;
+  output_state: Array<Maybe<OutputState>>;
 };
 
 
@@ -371,12 +371,12 @@ export type OutputStateResolvers<ContextType = any, ParentType extends Resolvers
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  constants?: Resolver<Maybe<ResolversTypes['ImmutableState']>, ParentType, ContextType>;
-  current_epoch?: Resolver<Maybe<ResolversTypes['AccumulatingEpoch']>, ParentType, ContextType>;
-  current_phase?: Resolver<Maybe<ResolversTypes['PhaseState']>, ParentType, ContextType>;
-  finalized_epochs?: Resolver<Maybe<ResolversTypes['FinalizedEpochs']>, ParentType, ContextType>;
+  constants?: Resolver<Array<Maybe<ResolversTypes['ImmutableState']>>, ParentType, ContextType>;
+  current_epoch?: Resolver<Array<Maybe<ResolversTypes['AccumulatingEpoch']>>, ParentType, ContextType>;
+  current_phase?: Resolver<Array<Maybe<ResolversTypes['PhaseState']>>, ParentType, ContextType>;
+  finalized_epochs?: Resolver<Array<Maybe<ResolversTypes['FinalizedEpochs']>>, ParentType, ContextType>;
   initial_epoch?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  output_state?: Resolver<Maybe<ResolversTypes['OutputState']>, ParentType, ContextType>;
+  output_state?: Resolver<Array<Maybe<ResolversTypes['OutputState']>>, ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {

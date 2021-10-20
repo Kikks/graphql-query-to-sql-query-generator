@@ -101,12 +101,12 @@ input OutputStateInput {
 }
 
 type Query {
-	constants: ImmutableState
+	constants(first: Int): [ImmutableState]!
 	initial_epoch: Int!
-	finalized_epochs: FinalizedEpochs
-	current_epoch: AccumulatingEpoch
-	current_phase: PhaseState
-	output_state: OutputState
+	finalized_epochs: [FinalizedEpochs]!
+	current_epoch: [AccumulatingEpoch]!
+	current_phase: [PhaseState]!
+	output_state: [OutputState]!
 }
 
 type Mutation {

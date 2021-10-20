@@ -3,6 +3,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -19,6 +20,12 @@ export type AccumulatingEpoch = {
   id: Scalars['ID'];
   input_contract_address: Scalars['String'];
   inputs: EpochInputState;
+};
+
+export type AccumulatingEpochInput = {
+  descartesv2_contract_address: Scalars['String'];
+  epoch_number: Scalars['Int'];
+  input_contract_address: Scalars['String'];
 };
 
 export type EpochInputState = {
@@ -48,6 +55,12 @@ export type FinalizedEpochs = {
   input_contract_address: Scalars['String'];
 };
 
+export type FinalizedEpochsInput = {
+  descartesv2_contract_address: Scalars['String'];
+  initial_epoch: Scalars['Int'];
+  input_contract_address: Scalars['String'];
+};
+
 export type ImmutableState = {
   __typename?: 'ImmutableState';
   challenge_period: Scalars['Int'];
@@ -55,6 +68,17 @@ export type ImmutableState = {
   descartesv2_contract_address: Scalars['String'];
   dispute_contract_address: Scalars['String'];
   id: Scalars['ID'];
+  input_contract_address: Scalars['String'];
+  input_duration: Scalars['Int'];
+  output_contract_address: Scalars['String'];
+  validator_contract_address: Scalars['String'];
+};
+
+export type ImmutableStateInput = {
+  challenge_period: Scalars['Int'];
+  contract_creation_timestamp: Scalars['Int'];
+  descartesv2_contract_address: Scalars['String'];
+  dispute_contract_address: Scalars['String'];
   input_contract_address: Scalars['String'];
   input_duration: Scalars['Int'];
   output_contract_address: Scalars['String'];
@@ -79,11 +103,55 @@ export type IntegerObject = {
   integer?: Maybe<IntegerInnerObject>;
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  constants: ImmutableState;
+  current_epoch: Scalars['String'];
+  current_phase: PhaseState;
+  finalized_epochs: Scalars['String'];
+  initial_epoch: Scalars['Int'];
+  output_state: Scalars['String'];
+};
+
+
+export type MutationConstantsArgs = {
+  input: ImmutableStateInput;
+};
+
+
+export type MutationCurrent_EpochArgs = {
+  input: AccumulatingEpochInput;
+};
+
+
+export type MutationCurrent_PhaseArgs = {
+  input: PhaseState;
+};
+
+
+export type MutationFinalized_EpochsArgs = {
+  input: FinalizedEpochsInput;
+};
+
+
+export type MutationInitial_EpochArgs = {
+  input: Scalars['Int'];
+};
+
+
+export type MutationOutput_StateArgs = {
+  input: OutputStateInput;
+};
+
 export type OutputState = {
   __typename?: 'OutputState';
   id: Scalars['ID'];
   output_address: Scalars['String'];
   outputs?: Maybe<IntegerObject>;
+};
+
+export type OutputStateInput = {
+  output_address: Scalars['String'];
 };
 
 export enum PhaseState {
@@ -175,17 +243,22 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   AccumulatingEpoch: ResolverTypeWrapper<AccumulatingEpoch>;
+  AccumulatingEpochInput: AccumulatingEpochInput;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   EpochInputState: ResolverTypeWrapper<EpochInputState>;
   FinalizedEpoch: ResolverTypeWrapper<FinalizedEpoch>;
   FinalizedEpochs: ResolverTypeWrapper<FinalizedEpochs>;
+  FinalizedEpochsInput: FinalizedEpochsInput;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   ImmutableState: ResolverTypeWrapper<ImmutableState>;
+  ImmutableStateInput: ImmutableStateInput;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   IntegerBool: ResolverTypeWrapper<IntegerBool>;
   IntegerInnerObject: ResolverTypeWrapper<IntegerInnerObject>;
   IntegerObject: ResolverTypeWrapper<IntegerObject>;
+  Mutation: ResolverTypeWrapper<{}>;
   OutputState: ResolverTypeWrapper<OutputState>;
+  OutputStateInput: OutputStateInput;
   PhaseState: PhaseState;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -194,17 +267,22 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   AccumulatingEpoch: AccumulatingEpoch;
+  AccumulatingEpochInput: AccumulatingEpochInput;
   Boolean: Scalars['Boolean'];
   EpochInputState: EpochInputState;
   FinalizedEpoch: FinalizedEpoch;
   FinalizedEpochs: FinalizedEpochs;
+  FinalizedEpochsInput: FinalizedEpochsInput;
   ID: Scalars['ID'];
   ImmutableState: ImmutableState;
+  ImmutableStateInput: ImmutableStateInput;
   Int: Scalars['Int'];
   IntegerBool: IntegerBool;
   IntegerInnerObject: IntegerInnerObject;
   IntegerObject: IntegerObject;
+  Mutation: {};
   OutputState: OutputState;
+  OutputStateInput: OutputStateInput;
   Query: {};
   String: Scalars['String'];
 };
@@ -276,6 +354,15 @@ export type IntegerObjectResolvers<ContextType = any, ParentType extends Resolve
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  constants?: Resolver<ResolversTypes['ImmutableState'], ParentType, ContextType, RequireFields<MutationConstantsArgs, 'input'>>;
+  current_epoch?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationCurrent_EpochArgs, 'input'>>;
+  current_phase?: Resolver<ResolversTypes['PhaseState'], ParentType, ContextType, RequireFields<MutationCurrent_PhaseArgs, 'input'>>;
+  finalized_epochs?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationFinalized_EpochsArgs, 'input'>>;
+  initial_epoch?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<MutationInitial_EpochArgs, 'input'>>;
+  output_state?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationOutput_StateArgs, 'input'>>;
+};
+
 export type OutputStateResolvers<ContextType = any, ParentType extends ResolversParentTypes['OutputState'] = ResolversParentTypes['OutputState']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   output_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -301,6 +388,7 @@ export type Resolvers<ContextType = any> = {
   IntegerBool?: IntegerBoolResolvers<ContextType>;
   IntegerInnerObject?: IntegerInnerObjectResolvers<ContextType>;
   IntegerObject?: IntegerObjectResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   OutputState?: OutputStateResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 };

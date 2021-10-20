@@ -25,6 +25,7 @@
     "express": "^4.17.1",
     "graphql": "^15.5.0",
     "graphql-import-node": "0.0.4",
+    "graphql-relay": "^0.9.0",
     "graphql-tools": "^7.0.4",
     "join-monster": "^3.0.4",
     "join-monster-graphql-tools-adapter": "^0.1.1",

@@ -1,82 +1,119 @@
+# Query types
 type ImmutableState {
-  id: ID!
-  input_duration: Int!
-  challenge_period: Int!
-  contract_creation_timestamp: Int!
-  input_contract_address: String!
-  output_contract_address: String!
-  validator_contract_address: String!
-  dispute_contract_address: String!
-  descartesv2_contract_address: String!
+	id: ID!
+	input_duration: Int!
+	challenge_period: Int!
+	contract_creation_timestamp: Int!
+	input_contract_address: String!
+	output_contract_address: String!
+	validator_contract_address: String!
+	dispute_contract_address: String!
+	descartesv2_contract_address: String!
 }
 
 type EpochInputState {
-  id: ID!
-  epoch_number: Int!
-  inputs: [Int]!
-  input_contract_address: String!
+	id: ID!
+	epoch_number: Int!
+	inputs: [Int]!
+	input_contract_address: String!
 }
 
 type FinalizedEpoch {
-  id: ID!
-  epoch_number: Int!
-  hash: Int!
-  inputs: EpochInputState!
-  finalized_block_hash: String!
-  finalized_block_number: Int!
+	id: ID!
+	epoch_number: Int!
+	hash: Int!
+	inputs: EpochInputState!
+	finalized_block_hash: String!
+	finalized_block_number: Int!
 }
 
 type FinalizedEpochs {
-  id: ID!
-  finalized_epochs: [FinalizedEpoch]!
-  initial_epoch: Int!
-  descartesv2_contract_address: String!
-  input_contract_address: String!
+	id: ID!
+	finalized_epochs: [FinalizedEpoch]!
+	initial_epoch: Int!
+	descartesv2_contract_address: String!
+	input_contract_address: String!
 }
 
 type AccumulatingEpoch {
-  id: ID!
-  epoch_number: Int!
-  inputs: EpochInputState!
-  descartesv2_contract_address: String!
-  input_contract_address: String!
+	id: ID!
+	epoch_number: Int!
+	inputs: EpochInputState!
+	descartesv2_contract_address: String!
+	input_contract_address: String!
 }
 
 enum PhaseState {
-  InputAccumulation
-  EpochSealedAwaitingFirstClaim
-  AwaitingConsensusNoConflict
-  AwaitingConsensusAfterConflict
-  ConsensusTimeout
-  AwaitingDispute
+	InputAccumulation
+	EpochSealedAwaitingFirstClaim
+	AwaitingConsensusNoConflict
+	AwaitingConsensusAfterConflict
+	ConsensusTimeout
+	AwaitingDispute
 }
 
 type IntegerBool {
-  id: ID!
-  integer: Boolean!
+	id: ID!
+	integer: Boolean!
 }
 
 type IntegerInnerObject {
-  id: ID!
-  integer: IntegerBool
+	id: ID!
+	integer: IntegerBool
 }
 
 type IntegerObject {
-  id: ID!
-  integer: IntegerInnerObject
+	id: ID!
+	integer: IntegerInnerObject
 }
 
 type OutputState {
-  id: ID!
-  output_address: String!
-  outputs: IntegerObject
+	id: ID!
+	output_address: String!
+	outputs: IntegerObject
+}
+
+# Mutation Inputs
+input ImmutableStateInput {
+	input_duration: Int!
+	challenge_period: Int!
+	contract_creation_timestamp: Int!
+	input_contract_address: String!
+	output_contract_address: String!
+	validator_contract_address: String!
+	dispute_contract_address: String!
+	descartesv2_contract_address: String!
+}
+
+input FinalizedEpochsInput {
+	initial_epoch: Int!
+	descartesv2_contract_address: String!
+	input_contract_address: String!
+}
+input AccumulatingEpochInput {
+	epoch_number: Int!
+	descartesv2_contract_address: String!
+	input_contract_address: String!
+}
+
+input OutputStateInput {
+	output_address: String!
 }
 
 type Query {
-  constants: ImmutableState
-  initial_epoch: Int!
-  finalized_epochs: FinalizedEpochs
-  current_epoch: AccumulatingEpoch
-  current_phase: PhaseState
-  output_state: OutputState
+	constants: ImmutableState
+	initial_epoch: Int!
+	finalized_epochs: FinalizedEpochs
+	current_epoch: AccumulatingEpoch
+	current_phase: PhaseState
+	output_state: OutputState
+}
+
+type Mutation {
+	constants(input: ImmutableStateInput!): ImmutableState!
+	initial_epoch(input: Int!): Int!
+	finalized_epochs(input: FinalizedEpochsInput!): String!
+	current_epoch(input: AccumulatingEpochInput!): String!
+	current_phase(input: PhaseState!): PhaseState!
+	output_state(input: OutputStateInput!): String!
 }

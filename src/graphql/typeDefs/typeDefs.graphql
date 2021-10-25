@@ -53,17 +53,14 @@ enum PhaseState {
 }
 
 type IntegerBool {
-	id: ID!
 	integer: Boolean!
 }
 
 type IntegerInnerObject {
-	id: ID!
 	integer: IntegerBool
 }
 
 type IntegerObject {
-	id: ID!
 	integer: IntegerInnerObject
 }
 
@@ -85,19 +82,48 @@ input ImmutableStateInput {
 	descartesv2_contract_address: String!
 }
 
+input EpochInputStateInput {
+	epoch_number: Int!
+	inputs: [Int]!
+	input_contract_address: String!
+}
+
+input FinalizedEpochInput {
+	epoch_number: Int!
+	hash: Int!
+	inputs: EpochInputStateInput!
+	finalized_block_hash: String!
+	finalized_block_number: Int!
+}
+
 input FinalizedEpochsInput {
 	initial_epoch: Int!
 	descartesv2_contract_address: String!
 	input_contract_address: String!
+	finalized_epochs: [FinalizedEpochInput]!
 }
 input AccumulatingEpochInput {
 	epoch_number: Int!
 	descartesv2_contract_address: String!
 	input_contract_address: String!
+	inputs: EpochInputStateInput!
+}
+
+input IntegerBoolInput {
+	integer: Boolean!
+}
+
+input IntegerInnerObjectInput {
+	integer: IntegerBoolInput!
+}
+
+input IntegerObjectInput {
+	integer: IntegerInnerObjectInput!
 }
 
 input OutputStateInput {
 	output_address: String!
+	outputs: IntegerObjectInput!
 }
 
 type Query {
@@ -110,9 +136,9 @@ type Query {
 }
 
 type Mutation {
-	constants(input: ImmutableStateInput!): ImmutableState!
+	constants(input: [ImmutableStateInput]!): [ImmutableState]!
 	initial_epoch(input: Int!): Int!
-	finalized_epochs(input: FinalizedEpochsInput!): String!
+	finalized_epochs(input: [FinalizedEpochsInput]!): String!
 	current_epoch(input: AccumulatingEpochInput!): String!
 	current_phase(input: PhaseState!): PhaseState!
 	output_state(input: OutputStateInput!): String!

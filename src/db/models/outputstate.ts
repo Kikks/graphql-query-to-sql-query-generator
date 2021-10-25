@@ -4,6 +4,13 @@ import { Model, UUIDV4 } from "sequelize";
 interface OutputStateAttributes {
   id: string;
   output_address: string;
+  outputs: {
+    integer: {
+      integer: {
+        integer: boolean
+      }
+    }
+  }
 }
 
 module.exports = (sequelize: any, DataTypes: any) => {
@@ -11,9 +18,12 @@ module.exports = (sequelize: any, DataTypes: any) => {
     implements OutputStateAttributes {
     id!: string;
     output_address!: string;
-
-    static associate(models: any) {
-      OutputState.hasOne(models.IntegerObject, { as: "output_state" });
+    outputs!: {
+      integer: {
+        integer: {
+          integer: boolean
+        }
+      }
     }
   }
   OutputState.init(
@@ -28,6 +38,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      outputs: {
+        type: DataTypes.JSON,
+        allowNull: false
+      }
     },
     {
       sequelize,

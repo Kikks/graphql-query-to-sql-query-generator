@@ -1,0 +1,87 @@
+mutation createImmutableState {
+  constants(
+    input: [
+      {
+        input_duration: 12
+        challenge_period: 13
+        contract_creation_timestamp: 14
+        input_contract_address: "An Address"
+        output_contract_address: "An Address"
+        validator_contract_address: "An Address"
+        dispute_contract_address: "An Address"
+        descartesv2_contract_address: "An Address"
+      }
+      {
+        input_duration: 15
+        challenge_period: 16
+        contract_creation_timestamp: 17
+        input_contract_address: "An Address"
+        output_contract_address: "An Address"
+        validator_contract_address: "An Address"
+        dispute_contract_address: "An Address"
+        descartesv2_contract_address: "An Address"
+      }
+    ]
+  ) {
+    id
+    input_duration
+    challenge_period
+    contract_creation_timestamp
+    input_contract_address
+    output_contract_address
+    validator_contract_address
+    dispute_contract_address
+    descartesv2_contract_address
+  }
+}
+
+mutation crateFinalizedEpochs {
+  finalized_epochs(
+    input: [
+      {
+        initial_epoch: 33
+        descartesv2_contract_address: "An address"
+        input_contract_address: "Another address"
+        finalized_epochs: [
+          {
+            epoch_number:100
+            hash: 200
+            finalized_block_hash: "A hash"
+            finalized_block_number: 300
+            inputs: {
+              epoch_number: 400
+              inputs: [1, 2, 3]
+              input_contract_address: "An Address"
+            }
+          }
+        ]
+      }
+    ]
+  )
+}
+
+mutation crateAccumulatingEpoch {
+  current_epoch (input: {
+    epoch_number: 1000
+    descartesv2_contract_address: "An Address"
+    inputs: {
+      epoch_number:2000
+      input_contract_address: "Another Address again"
+      inputs: [3000, 4000, 5000]
+    }
+    input_contract_address: "Another Address"
+  })
+}
+
+mutation createOutpuState {
+  output_state(input: {
+    output_address: "The output address"
+    outputs: {
+      integer:{
+        integer: {
+          integer:false
+        }
+      }
+    }
+  })
+}

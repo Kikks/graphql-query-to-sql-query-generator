@@ -1,0 +1,65 @@
+# Write your query or mutation here
+query constants {
+  constants {
+    id
+    input_duration
+    challenge_period
+    input_contract_address
+    contract_creation_timestamp
+    output_contract_address
+    validator_contract_address
+    dispute_contract_address
+    descartesv2_contract_address
+  }
+}
+
+query finalized_epochs {
+  finalized_epochs {
+    id
+    finalized_epochs {
+      id
+      epoch_number
+      hash
+      inputs {
+        id
+        epoch_number
+        inputs
+        input_contract_address
+      }
+      finalized_block_hash
+      finalized_block_number
+    }
+    initial_epoch
+    descartesv2_contract_address
+    input_contract_address
+  }
+}
+
+query current_epoch {
+  current_epoch {
+    id
+    epoch_number
+    inputs {
+      id
+      epoch_number
+      inputs
+      input_contract_address
+    }
+    descartesv2_contract_address
+    input_contract_address
+  }
+}
+
+query output_state {
+  output_state {
+    id
+    output_address
+    outputs {
+      integer {
+        integer {
+          integer
+        }
+      }
+    }
+  }
+}

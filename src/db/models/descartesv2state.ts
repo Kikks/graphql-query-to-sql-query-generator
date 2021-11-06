@@ -3,9 +3,9 @@ import { Model, UUID } from "sequelize";
 
 interface DescartesV2StateAttributes {
 	block_hash: string;
-	constants: string;
+	constants: string[];
 	initial_epoch: string;
-	finalized_epochs: string;
+	finalized_epochs: string[];
 	current_epoch: string;
 	current_phase: string;
 	output_state: string;
@@ -17,9 +17,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
 	class DescartesV2State extends Model<DescartesV2StateAttributes>
 		implements DescartesV2StateAttributes {
 		block_hash!: string;
-		constants!: string;
+		constants!: string[];
 		initial_epoch!: string;
-		finalized_epochs!: string;
+		finalized_epochs!: string[];
 		current_epoch!: string;
 		current_phase!: string;
 		output_state!: string;

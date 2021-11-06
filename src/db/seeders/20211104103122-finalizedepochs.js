@@ -18,13 +18,17 @@ module.exports = {
 					id: inputId1,
 					sender: "Sender 1",
 					timestamp: "Timestamp 1",
-					payload: "Payload 1"
+					payload: ["Payload 1"],
+					createdAt: new Date(),
+					updatedAt: new Date()
 				},
 				{
 					id: inputId2,
 					sender: "Sender 2",
 					timestamp: "Timestamp 2",
-					payload: "Payload 2"
+					payload: ["Payload 2"],
+					createdAt: new Date(),
+					updatedAt: new Date()
 				}
 			],
 			{}

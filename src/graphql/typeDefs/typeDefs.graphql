@@ -1,9 +1,9 @@
 # Query types
 type ImmutableState {
 	id: ID!
-	input_duration: Int!
-	challenge_period: Int!
-	contract_creation_timestamp: Int!
+	input_duration: String!
+	challenge_period: String!
+	contract_creation_timestamp: String!
 	input_contract_address: String!
 	output_contract_address: String!
 	validator_contract_address: String!
@@ -11,16 +11,24 @@ type ImmutableState {
 	descartesv2_contract_address: String!
 }
 
+type Input {
+	id: ID!
+	sender: String!
+	timestamp: String!
+	payload: [String]!
+}
+
 type EpochInputState {
 	id: ID!
-	epoch_number: Int!
-	inputs: [Int]!
+	epoch_number: String!
+	# ID of the Input type
+	inputs: [ID]!
 	input_contract_address: String!
 }
 
 type FinalizedEpoch {
 	id: ID!
-	epoch_number: Int!
+	epoch_number: String!
 	hash: Int!
 	inputs: EpochInputState!
 	finalized_block_hash: String!
@@ -30,14 +38,14 @@ type FinalizedEpoch {
 type FinalizedEpochs {
 	id: ID!
 	finalized_epochs: [FinalizedEpoch]!
-	initial_epoch: Int!
+	initial_epoch: String!
 	descartesv2_contract_address: String!
 	input_contract_address: String!
 }
 
 type AccumulatingEpoch {
 	id: ID!
-	epoch_number: Int!
+	epoch_number: String!
 	inputs: EpochInputState!
 	descartesv2_contract_address: String!
 	input_contract_address: String!
@@ -70,11 +78,21 @@ type OutputState {
 	outputs: IntegerObject
 }
 
+type DescartesV2State {
+	block_hash: ID!
+	constants: [ImmutableState]!
+	initial_epoch: String!
+	finalized_epochs: [FinalizedEpochs]!
+	current_epoch: AccumulatingEpoch!
+	current_phase: PhaseState!
+	output_state: OutputState!
+}
+
 # Mutation Inputs
 input ImmutableStateInput {
-	input_duration: Int!
-	challenge_period: Int!
-	contract_creation_timestamp: Int!
+	input_duration: String!
+	challenge_period: String!
+	contract_creation_timestamp: String!
 	input_contract_address: String!
 	output_contract_address: String!
 	validator_contract_address: String!
@@ -82,14 +100,20 @@ input ImmutableStateInput {
 	descartesv2_contract_address: String!
 }
 
+input InputData {
+	sender: String!
+	timestamp: String!
+	payload: [String]!
+}
+
 input EpochInputStateInput {
-	epoch_number: Int!
-	inputs: [Int]!
+	epoch_number: String!
+	inputs: [InputData]!
 	input_contract_address: String!
 }
 
 input FinalizedEpochInput {
-	epoch_number: Int!
+	epoch_number: String!
 	hash: Int!
 	inputs: EpochInputStateInput!
 	finalized_block_hash: String!
@@ -97,13 +121,13 @@ input FinalizedEpochInput {
 }
 
 input FinalizedEpochsInput {
-	initial_epoch: Int!
+	initial_epoch: String!
 	descartesv2_contract_address: String!
 	input_contract_address: String!
 	finalized_epochs: [FinalizedEpochInput]!
 }
 input AccumulatingEpochInput {
-	epoch_number: Int!
+	epoch_number: String!
 	descartesv2_contract_address: String!
 	input_contract_address: String!
 	inputs: EpochInputStateInput!
@@ -126,20 +150,31 @@ input OutputStateInput {
 	outputs: IntegerObjectInput!
 }
 
+input DescartesInput {
+	constants: [ImmutableStateInput]!
+	initial_epoch: String!
+	finalized_epochs: [FinalizedEpochsInput]!
+	current_epoch: AccumulatingEpochInput!
+	current_phase: PhaseState!
+	output_state: OutputStateInput!
+}
+
 type Query {
-	constants(first: Int): [ImmutableState]!
-	initial_epoch: Int!
+	constants: [ImmutableState]!
+	initial_epoch: String!
 	finalized_epochs: [FinalizedEpochs]!
 	current_epoch: [AccumulatingEpoch]!
 	current_phase: [PhaseState]!
 	output_state: [OutputState]!
+	DescartesState: [DescartesV2State]!
 }
 
 type Mutation {
 	constants(input: [ImmutableStateInput]!): [ImmutableState]!
-	initial_epoch(input: Int!): Int!
-	finalized_epochs(input: [FinalizedEpochsInput]!): String!
-	current_epoch(input: AccumulatingEpochInput!): String!
+	initial_epoch(input: String!): String!
+	finalized_epochs(input: [FinalizedEpochsInput]!): [FinalizedEpochs]!
+	current_epoch(input: AccumulatingEpochInput!): AccumulatingEpoch!
 	current_phase(input: PhaseState!): PhaseState!
-	output_state(input: OutputStateInput!): String!
+	output_state(input: OutputStateInput!): OutputState!
+	DescartesState(input: DescartesInput!): DescartesV2State!
 }

@@ -14,21 +14,21 @@ const PORT = 4000;
 const app = express();
 
 const server = new ApolloServer({
-  schema,
+	schema
 });
 
 db.sequelize
-  .sync()
-  .then(() => {
-    console.log("Connected to database successfully");
-  })
-  .catch(() => {
-    console.error("Error connecting to database");
-  });
+	.authenticate()
+	.then(() => {
+		console.log("Connected to database successfully");
+	})
+	.catch(() => {
+		console.error("Error connecting to database");
+	});
 
 server.applyMiddleware({ app, path: "/graphql" });
 app.listen(PORT, () => {
-  console.log(
-    `\n🚀      GraphQL is now running on http://localhost:${PORT}/graphql`
-  );
+	console.log(
+		`\n🚀      GraphQL is now running on http://localhost:${PORT}/graphql`
+	);
 });

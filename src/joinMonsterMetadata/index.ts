@@ -1,12 +1,31 @@
 export default {
 	ImmutableState: {
-		// map the User object type to its SQL table
 		extensions: {
 			joinMonster: {
 				sqlTable: '"ImmutableStates"',
 				sqlPaginate: true,
 				orderBy: '"createdAt"',
 				uniqueKey: "id"
+			}
+		}
+	},
+	Input: {
+		extensions: {
+			joinMonster: {
+				sqlTable: '"Inputs"',
+				sqlPaginate: true,
+				orderBy: '"createdAt"',
+				uniqueKey: "id"
+			}
+		}
+	},
+	EpochInputState: {
+		extensions: {
+			joinMonster: {
+				sqlTable: '"EpochInputStates"',
+				uniqueKey: "id",
+				sqlPaginate: true,
+				orderBy: '"createdAt"'
 			}
 		}
 	},
@@ -23,7 +42,7 @@ export default {
 			finalized_epochs: {
 				extensions: {
 					joinMonster: {
-						sqlTable: '"FinalizedEpochs"',
+						sqlTable: '"FinalizedEpoches"',
 						uniqueKey: "id",
 						sqlJoin: (finalizedEpochsTable: any, finalizedEpochTable: any) =>
 							`${finalizedEpochsTable}.id = ${finalizedEpochTable}."FinalizedEpochId"`
@@ -46,19 +65,9 @@ export default {
 						sqlTable: '"EpochInputStates"',
 						uniqueKey: "id",
 						sqlJoin: (finalizedEpochTable: any, epochInputStateTable: any) =>
-							`${finalizedEpochTable}.id = ${epochInputStateTable}."finalizedEpochId"`
+							`${finalizedEpochTable}."epochInputStateId" = ${epochInputStateTable}.id`
 					}
 				}
-			}
-		}
-	},
-	EpochInputState: {
-		extensions: {
-			joinMonster: {
-				sqlTable: '"EpochInputStates"',
-				uniqueKey: "id",
-				sqlPaginate: true,
-				orderBy: '"createdAt"'
 			}
 		}
 	},
@@ -67,8 +76,8 @@ export default {
 			joinMonster: {
 				sqlTable: '"AccumulatingEpoches"',
 				uniqueKey: "id",
-        sqlPaginate: true,
-        orderBy: '"createdAt"',
+				sqlPaginate: true,
+				orderBy: '"createdAt"'
 			}
 		},
 		fields: {
@@ -78,7 +87,7 @@ export default {
 						sqlTable: '"EpochInputStates"',
 						uniqueKey: "id",
 						sqlJoin: (accumulatingEpochTable: any, epochInputStateTable: any) =>
-							`${accumulatingEpochTable}.id = ${epochInputStateTable}."accumulatingEpochId"`
+							`${accumulatingEpochTable}."epochInputStateId" = ${epochInputStateTable}."id"`
 					}
 				}
 			}
@@ -89,9 +98,66 @@ export default {
 			joinMonster: {
 				sqlTable: '"OutputStates"',
 				uniqueKey: "id",
-        sqlPaginate: true,
-        orderBy: '"createdAt"',
+				sqlPaginate: true,
+				orderBy: '"createdAt"'
+			}
+		}
+	},
+	DescartesV2State: {
+		extensions: {
+			joinMonster: {
+				sqlTable: '"DescartesV2States"',
+				uniqueKey: "block_hash",
+				orderBy: '"createdAt"'
 			}
 		},
-	},
+		fields: {
+			constants: {
+				extensions: {
+					joinMonster: {
+						sqlTable: '"ImmutableStates"',
+						uniqueKey: "id",
+						sqlJoin: (descartesV2StateTable: any, immutableStateTable: any) =>
+							`${descartesV2StateTable}.block_hash = ${immutableStateTable}.descartes_hash`
+					}
+				}
+			},
+			finalized_epochs: {
+				extensions: {
+					joinMonster: {
+						sqlTable: '"FinalizedEpochs"',
+						uniqueKey: "id",
+						sqlJoin: (descartesV2StateTable: any, finalizedEpochsTable: any) =>
+							`${descartesV2StateTable}.block_hash = ${finalizedEpochsTable}.descartes_hash`
+					}
+				}
+			},
+			current_epoch: {
+				extensions: {
+					joinMonster: {
+						sqlTable: '"AccumulatingEpoches"',
+						uniqueKey: "id",
+						sqlJoin: (
+							descartesV2StateTable: any,
+							accumulatingEpochTable: any
+						) =>
+							`${descartesV2StateTable}.block_hash = ${accumulatingEpochTable}.descartes_hash`
+					}
+				}
+			},
+			output_state: {
+				extensions: {
+					joinMonster: {
+						sqlTable: '"OutputStates"',
+						uniqueKey: "id",
+						sqlJoin: (
+							descartesV2StateTable: any,
+							outputStateTable: any
+						) =>
+							`${descartesV2StateTable}.block_hash = ${outputStateTable}.descartes_hash`
+					}
+				}
+			}
+		}
+	}
 };

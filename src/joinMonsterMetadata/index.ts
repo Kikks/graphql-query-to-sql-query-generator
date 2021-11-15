@@ -1,4 +1,24 @@
 export default {
+	Query: {
+		fields: {
+			GetSessionStatus: {
+				extensions: {
+					joinMonster: {
+						where: (table: any, args: any) =>
+							`${table}."session_id" = '${args.query.session_id}'`
+					}
+				}
+			},
+			GetEpochStatus: {
+				extensions: {
+					joinMonster: {
+						where: (table: any, args: any) =>
+							`${table}.session_id = '${args.query.session_id}'`
+					}
+				}
+			}
+		}
+	},
 	ImmutableState: {
 		extensions: {
 			joinMonster: {

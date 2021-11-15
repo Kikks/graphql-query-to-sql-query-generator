@@ -112,7 +112,7 @@ export type FinalizedEpochsInput = {
 
 export type GetEpochStatusRequest = {
   epoch_index: Scalars['Int'];
-  session_id: Scalars['String'];
+  session_id: Scalars['ID'];
 };
 
 export type GetEpochStatusResponse = {
@@ -123,20 +123,20 @@ export type GetEpochStatusResponse = {
   most_recent_vouchers_epoch_root_hash: Scalars['String'];
   pending_input_count: Scalars['Int'];
   processed_inputs: Array<Maybe<ProcessedInput>>;
-  session_id: Scalars['String'];
+  session_id: Scalars['ID'];
   state: EpochState;
   taint_status: TaintStatus;
 };
 
 export type GetSessionStatusRequest = {
-  session_id: Scalars['String'];
+  session_id: Scalars['ID'];
 };
 
 export type GetSessionStatusResponse = {
   __typename?: 'GetSessionStatusResponse';
   active_epoch_index: Scalars['Int'];
   epoch_index: Array<Maybe<Scalars['Int']>>;
-  session_id: Scalars['String'];
+  session_id: Scalars['ID'];
   taint_status: TaintStatus;
 };
 
@@ -557,7 +557,7 @@ export type GetEpochStatusResponseResolvers<ContextType = any, ParentType extend
   most_recent_vouchers_epoch_root_hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   pending_input_count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   processed_inputs?: Resolver<Array<Maybe<ResolversTypes['ProcessedInput']>>, ParentType, ContextType>;
-  session_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  session_id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   state?: Resolver<ResolversTypes['EpochState'], ParentType, ContextType>;
   taint_status?: Resolver<ResolversTypes['TaintStatus'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -566,7 +566,7 @@ export type GetEpochStatusResponseResolvers<ContextType = any, ParentType extend
 export type GetSessionStatusResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetSessionStatusResponse'] = ResolversParentTypes['GetSessionStatusResponse']> = {
   active_epoch_index?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   epoch_index?: Resolver<Array<Maybe<ResolversTypes['Int']>>, ParentType, ContextType>;
-  session_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  session_id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   taint_status?: Resolver<ResolversTypes['TaintStatus'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

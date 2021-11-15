@@ -136,7 +136,7 @@ query getStatus {
 
 query getSessionStatus {
   GetSessionStatus(query:{
-    session_id: "session-2"
+    session_id: "6027956b-30c5-4e9c-a156-88cfa4da48e1"
   }) {
     session_id
     active_epoch_index
@@ -150,7 +150,7 @@ query getSessionStatus {
 
 query getEpochStatus {
   GetEpochStatus(query: {
-    session_id: "session-12345"
+    session_id: "42b22569-118b-4232-8cad-8957baecf507"
     epoch_index: 1
   }) {
     session_id

@@ -1,4 +1,5 @@
 "use strict";
+const { v4: uuidv4 } = require("uuid");
 
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
@@ -6,7 +7,7 @@ module.exports = {
 			"EpochStatuses",
 			[
 				{
-					session_id: 'session-12345',
+					session_id: uuidv4(),
 					epoch_index: 400,
 					state: "FINISHED",
 					most_recent_machine_hash: "A recent machine hash",
@@ -68,7 +69,7 @@ module.exports = {
 					updatedAt: new Date()
 				},
 				{
-					session_id: 'session-67890',
+					session_id: "42b22569-118b-4232-8cad-8957baecf507",
 					epoch_index: 400,
 					state: "FINISHED",
 					most_recent_machine_hash: "A recent machine hash",

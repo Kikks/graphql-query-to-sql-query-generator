@@ -98,7 +98,7 @@ type TaintStatus {
 }
 
 type GetSessionStatusResponse {
-	session_id: String!
+	session_id: ID!
 	active_epoch_index: Int!
 	epoch_index: [Int]!
 	taint_status: TaintStatus!
@@ -153,7 +153,7 @@ type ProcessedInput {
 }
 
 type GetEpochStatusResponse {
-	session_id: String!
+	session_id: ID!
 	epoch_index: Int!
 	state: EpochState!
 	most_recent_machine_hash: String!
@@ -236,11 +236,11 @@ input DescartesInput {
 }
 
 input GetSessionStatusRequest {
-	session_id: String!
+	session_id: ID!
 }
 
 input GetEpochStatusRequest {
-	session_id: String!
+	session_id: ID!
 	epoch_index: Int!
 }
 

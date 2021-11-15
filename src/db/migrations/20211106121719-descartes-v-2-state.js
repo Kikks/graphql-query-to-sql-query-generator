@@ -8,7 +8,7 @@ module.exports = {
 				type: Sequelize.UUID
 			},
 			constants: {
-				type: Sequelize.ARRAY(Sequelize.UUID),
+				type: Sequelize.ARRAY(Sequelize.STRING),
 				allowNull: false
 			},
 			initial_epoch: {
@@ -16,8 +16,7 @@ module.exports = {
 				allowNull: false
 			},
 			finalized_epochs: {
-				type: Sequelize.ARRAY(Sequelize.UUID),
-				current_epoch: Sequelize.UUID,
+				type: Sequelize.ARRAY(Sequelize.STRING),
 				allowNull: false
 			},
 			current_epoch: {

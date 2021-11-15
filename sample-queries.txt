@@ -63,3 +63,131 @@ query output_state {
     }
   }
 }
+
+query descartes {
+  DescartesState {
+    block_hash
+    constants {
+      id
+      input_duration
+      challenge_period
+      input_contract_address
+      contract_creation_timestamp
+      output_contract_address
+      validator_contract_address
+      dispute_contract_address
+      descartesv2_contract_address
+    }
+    initial_epoch
+    finalized_epochs {
+      id
+      finalized_epochs {
+        id
+        epoch_number
+        hash
+        inputs {
+          id
+          epoch_number
+          inputs
+          input_contract_address
+        }
+        finalized_block_hash
+        finalized_block_number
+      }
+      initial_epoch
+      descartesv2_contract_address
+      input_contract_address
+    }
+    current_epoch {
+      id
+      epoch_number
+      inputs {
+        id
+        epoch_number
+        inputs
+        input_contract_address
+      }
+      descartesv2_contract_address
+      input_contract_address
+    }
+    output_state {
+      id
+      output_address
+      outputs {
+        integer {
+          integer {
+            integer
+          }
+        }
+      }
+    }
+  }
+}
+
+query getVersionNumber {
+  GetVersion
+}
+
+query getStatus {
+  GetStatus {
+    session_id
+  }
+}
+
+query getSessionStatus {
+  GetSessionStatus(query:{
+    session_id: "session-2"
+  }) {
+    session_id
+    active_epoch_index
+    epoch_index
+    taint_status {
+      error_code
+      error_message
+    }
+  }
+}
+
+query getEpochStatus {
+  GetEpochStatus(query: {
+    session_id: "session-12345"
+    epoch_index: 1
+  }) {
+    session_id
+    epoch_index
+    state
+    most_recent_machine_hash
+    most_recent_vouchers_epoch_root_hash
+    most_recent_notices_epoch_root_hash
+    processed_inputs {
+      input_index
+      most_recent_machine_hash
+      voucher_hashes_in_epoch
+      notice_hashes_in_epoch
+      reports {
+        payload
+      }
+      result {
+        voucher_hashes_in_machine
+        vouchers {
+          keccak
+          address
+          payload
+          keccak_in_voucher_hashes
+        }
+        notice_hashes_in_machine
+        notices {
+          keccak
+          payload
+          keccak_in_notice_hashes
+        }
+      }
+      skip_reason
+    }
+    pending_input_count
+    taint_status {
+      error_code
+      error_message
+    }
+  }
+}

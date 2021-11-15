@@ -17,7 +17,7 @@ module.exports = {
 				allowNull: false
 			},
 			inputs: {
-				type: Sequelize.ARRAY(Sequelize.UUID),
+				type: Sequelize.ARRAY(Sequelize.STRING),
 				allowNull: false
 			},
 			createdAt: {

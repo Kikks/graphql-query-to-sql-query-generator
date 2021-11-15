@@ -88,6 +88,82 @@ type DescartesV2State {
 	output_state: OutputState!
 }
 
+type GetStatusResponse {
+	session_id: [String]!
+}
+
+type TaintStatus {
+	error_code: Int!
+	error_message: String!
+}
+
+type GetSessionStatusResponse {
+	session_id: String!
+	active_epoch_index: Int!
+	epoch_index: [Int]!
+	taint_status: TaintStatus!
+}
+
+enum EpochState {
+	ACTIVE
+	FINISHED
+}
+
+type Report {
+	payload: String!
+}
+
+type Voucher {
+	keccak: String!
+	address: String!
+	payload: String!
+	keccak_in_voucher_hashes: String!
+}
+
+type Notice {
+	keccak: String!
+	payload: String!
+	keccak_in_notice_hashes: String!
+}
+
+type InputResult {
+	voucher_hashes_in_machine: String!
+	vouchers: [Voucher]!
+	notice_hashes_in_machine: String!
+	notices: [Notice]!
+}
+
+enum CompletionStatus {
+	ACCEPTED
+	CYCLE_LIMIT_EXCEEDED
+	REJECTED_BY_MACHINE
+	MACHINE_HALTED
+	TIME_LIMIT_EXCEEDED
+}
+
+type ProcessedInput {
+	input_index: Int!
+	most_recent_machine_hash: String!
+	voucher_hashes_in_epoch: String!
+	notice_hashes_in_epoch: String!
+	reports: [Report]!
+	# is supposed to be "oneof"
+	result: InputResult
+	skip_reason: CompletionStatus
+}
+
+type GetEpochStatusResponse {
+	session_id: String!
+	epoch_index: Int!
+	state: EpochState!
+	most_recent_machine_hash: String!
+	most_recent_vouchers_epoch_root_hash: String!
+	most_recent_notices_epoch_root_hash: String!
+	processed_inputs: [ProcessedInput]!
+	pending_input_count: Int!
+	taint_status: TaintStatus!
+}
+
 # Mutation Inputs
 input ImmutableStateInput {
 	input_duration: String!
@@ -159,6 +235,15 @@ input DescartesInput {
 	output_state: OutputStateInput!
 }
 
+input GetSessionStatusRequest {
+	session_id: String!
+}
+
+input GetEpochStatusRequest {
+	session_id: String!
+	epoch_index: Int!
+}
+
 type Query {
 	constants: [ImmutableState]!
 	initial_epoch: String!
@@ -167,6 +252,10 @@ type Query {
 	current_phase: [PhaseState]!
 	output_state: [OutputState]!
 	DescartesState: [DescartesV2State]!
+	GetVersion: String!
+	GetStatus: GetStatusResponse!
+	GetSessionStatus(query: GetSessionStatusRequest!): GetSessionStatusResponse!
+	GetEpochStatus(query: GetEpochStatusRequest!): GetEpochStatusResponse!
 }
 
 type Mutation {

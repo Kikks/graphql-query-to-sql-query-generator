@@ -150,13 +150,30 @@ export default {
 					joinMonster: {
 						sqlTable: '"OutputStates"',
 						uniqueKey: "id",
-						sqlJoin: (
-							descartesV2StateTable: any,
-							outputStateTable: any
-						) =>
+						sqlJoin: (descartesV2StateTable: any, outputStateTable: any) =>
 							`${descartesV2StateTable}.block_hash = ${outputStateTable}.descartes_hash`
 					}
 				}
+			}
+		}
+	},
+	GetSessionStatusResponse: {
+		extensions: {
+			joinMonster: {
+				sqlTable: '"SessionStatuses"',
+				sqlPaginate: true,
+				orderBy: '"createdAt"',
+				uniqueKey: "session_id"
+			}
+		}
+	},
+	GetEpochStatusResponse: {
+		extensions: {
+			joinMonster: {
+				sqlTable: '"EpochStatuses"',
+				sqlPaginate: true,
+				orderBy: '"createdAt"',
+				uniqueKey: "session_id"
 			}
 		}
 	}

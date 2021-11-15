@@ -1,3 +1,4 @@
+require("dotenv").config();
 import { IResolvers } from "graphql-tools";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -13,7 +14,10 @@ import {
 	AccumulatingEpochInput,
 	OutputStateInput,
 	DescartesInput,
-	DescartesV2State
+	DescartesV2State,
+	GetStatusResponse,
+	GetSessionStatusResponse,
+	GetEpochStatusResponse
 } from "../generated-typeDefs";
 import joinMonster from "join-monster";
 import db from "../../db/models";
@@ -85,6 +89,62 @@ export const UserResolvers: IResolvers = {
 		},
 
 		async DescartesState(_: void, args, {}, info): Promise<ImmutableState> {
+			try {
+				return joinMonster(info, args, (sql: any) => {
+					console.log(sql);
+
+					return db.sequelize.query(sql, {
+						type: db.sequelize.QueryTypes.SELECT
+					});
+				});
+			} catch (error: any) {
+				throw Error(error);
+			}
+		},
+
+		GetVersion(): string {
+			try {
+				if (process.env.VERSION_NUMBER) {
+					return process.env.VERSION_NUMBER;
+				} else {
+					throw new Error("Version number is not defined in the environment");
+				}
+			} catch (error: any) {
+				throw new Error(error);
+			}
+		},
+
+		GetStatus(): GetStatusResponse {
+			return {
+				session_id: [uuidv4(), uuidv4(), uuidv4()]
+			};
+		},
+
+		async GetSessionStatus(
+			_: void,
+			args,
+			{},
+			info
+		): Promise<GetSessionStatusResponse> {
+			try {
+				return joinMonster(info, args, (sql: any) => {
+					console.log(sql);
+
+					return db.sequelize.query(sql, {
+						type: db.sequelize.QueryTypes.SELECT
+					});
+				});
+			} catch (error: any) {
+				throw Error(error);
+			}
+		},
+
+		async GetEpochStatus(
+			_: void,
+			args,
+			{},
+			info
+		): Promise<GetEpochStatusResponse> {
 			try {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);

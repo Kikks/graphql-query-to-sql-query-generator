@@ -7,8 +7,6 @@ const epochInputId2 = uuidv4();
 const inputId1 = uuidv4();
 const inputId2 = uuidv4();
 
-const inputs = [inputId1, inputId2];
-
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
 		await queryInterface.bulkInsert(
@@ -18,7 +16,7 @@ module.exports = {
 					id: inputId1,
 					sender: "Sender 1",
 					timestamp: "Timestamp 1",
-					payload: ["Payload 1"],
+					payload: [inputId1, inputId2],
 					createdAt: new Date(),
 					updatedAt: new Date()
 				},
@@ -26,7 +24,7 @@ module.exports = {
 					id: inputId2,
 					sender: "Sender 2",
 					timestamp: "Timestamp 2",
-					payload: ["Payload 2"],
+					payload: [inputId1, inputId2],
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}
@@ -40,16 +38,8 @@ module.exports = {
 				{
 					id: epochInputId1,
 					epoch_number: "1",
-					inputs,
+					inputs: [uuidv4()],
 					input_contract_address: "Address 1",
-					createdAt: new Date(),
-					updatedAt: new Date()
-				},
-				{
-					id: epochInputId2,
-					epoch_number: "1",
-					inputs,
-					input_contract_address: "Address 2",
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}

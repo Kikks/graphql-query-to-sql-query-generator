@@ -20,7 +20,7 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			descartes_hash: Sequelize.UUID,
+			descartes_hash: Sequelize.STRING,
 			createdAt: {
 				type: Sequelize.DATE,
 				allowNull: false

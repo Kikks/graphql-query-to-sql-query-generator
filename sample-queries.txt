@@ -6,7 +6,7 @@ query constants {
     challenge_period
     input_contract_address
     contract_creation_timestamp
-    output_contract_address
+    voucher_contract_address
     validator_contract_address
     dispute_contract_address
     descartesv2_contract_address
@@ -23,7 +23,12 @@ query finalized_epochs {
       inputs {
         id
         epoch_number
-        inputs
+        inputs {
+          id
+          sender
+          timestamp
+          payload
+        }
         input_contract_address
       }
       finalized_block_hash
@@ -42,7 +47,12 @@ query current_epoch {
     inputs {
       id
       epoch_number
-      inputs
+      inputs {
+        id
+        sender
+        timestamp
+        payload
+      }
       input_contract_address
     }
     descartesv2_contract_address
@@ -50,11 +60,11 @@ query current_epoch {
   }
 }
 
-query output_state {
-  output_state {
+query voucher_state {
+  voucher_state {
     id
-    output_address
-    outputs {
+    voucher_address
+    vouchers {
       integer {
         integer {
           integer
@@ -73,47 +83,33 @@ query descartes {
       challenge_period
       input_contract_address
       contract_creation_timestamp
-      output_contract_address
+      voucher_contract_address
       validator_contract_address
       dispute_contract_address
       descartesv2_contract_address
     }
     initial_epoch
-    finalized_epochs {
-      id
-      finalized_epochs {
-        id
-        epoch_number
-        hash
-        inputs {
-          id
-          epoch_number
-          inputs
-          input_contract_address
-        }
-        finalized_block_hash
-        finalized_block_number
-      }
-      initial_epoch
-      descartesv2_contract_address
-      input_contract_address
-    }
     current_epoch {
       id
       epoch_number
       inputs {
         id
         epoch_number
-        inputs
+        inputs {
+          id
+          sender
+          timestamp
+          payload
+        }
         input_contract_address
       }
       descartesv2_contract_address
       input_contract_address
     }
-    output_state {
+    voucher_state {
       id
-      output_address
-      outputs {
+      voucher_address
+      vouchers {
         integer {
           integer {
             integer
@@ -135,9 +131,9 @@ query getStatus {
 }
 
 query getSessionStatus {
-  GetSessionStatus(query:{
-    session_id: "6027956b-30c5-4e9c-a156-88cfa4da48e1"
-  }) {
+  GetSessionStatus(
+    query: { session_id: "6027956b-30c5-4e9c-a156-88cfa4da48e1" }
+  ) {
     session_id
     active_epoch_index
     epoch_index
@@ -149,10 +145,12 @@ query getSessionStatus {
 }
 
 query getEpochStatus {
-  GetEpochStatus(query: {
-    session_id: "42b22569-118b-4232-8cad-8957baecf507"
-    epoch_index: 1
-  }) {
+  GetEpochStatus(
+    query: {
+      session_id: "42b22569-118b-4232-8cad-8957baecf507"
+      epoch_index: 1
+    }
+  ) {
     session_id
     epoch_index
     state

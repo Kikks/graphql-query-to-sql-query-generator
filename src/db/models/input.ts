@@ -6,6 +6,7 @@ interface InputAttributes {
 	sender: string;
 	timestamp: string;
 	payload: string[];
+	epoch_input_state_id: string;
 	createdAt: string;
 	updatedAt: string;
 }
@@ -16,6 +17,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		sender!: string;
 		timestamp!: string;
 		payload!: string[];
+		epoch_input_state_id!: string;
 		createdAt!: string;
 		updatedAt!: string;
 	}
@@ -37,6 +39,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			},
 			payload: {
 				type: DataTypes.ARRAY(DataTypes.UUID)
+			},
+			epoch_input_state_id: {
+				type: DataTypes.UUID,
+				allowNull: false
 			},
 			createdAt: {
 				type: DataTypes.DATE

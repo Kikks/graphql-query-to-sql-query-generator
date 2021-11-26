@@ -41,9 +41,8 @@ export type DescartesInput = {
   constants: Array<Maybe<ImmutableStateInput>>;
   current_epoch: AccumulatingEpochInput;
   current_phase: PhaseState;
-  finalized_epochs: Array<Maybe<FinalizedEpochsInput>>;
   initial_epoch: Scalars['String'];
-  output_state: OutputStateInput;
+  voucher_state: VoucherStateInput;
 };
 
 export type DescartesV2State = {
@@ -52,9 +51,8 @@ export type DescartesV2State = {
   constants: Array<Maybe<ImmutableState>>;
   current_epoch: AccumulatingEpoch;
   current_phase: PhaseState;
-  finalized_epochs: Array<Maybe<FinalizedEpochs>>;
   initial_epoch: Scalars['String'];
-  output_state: OutputState;
+  voucher_state: VoucherState;
 };
 
 export type EpochInputState = {
@@ -62,7 +60,7 @@ export type EpochInputState = {
   epoch_number: Scalars['String'];
   id: Scalars['ID'];
   input_contract_address: Scalars['String'];
-  inputs: Array<Maybe<Scalars['ID']>>;
+  inputs: Array<Maybe<Input>>;
 };
 
 export type EpochInputStateInput = {
@@ -80,8 +78,8 @@ export type FinalizedEpoch = {
   __typename?: 'FinalizedEpoch';
   epoch_number: Scalars['String'];
   finalized_block_hash: Scalars['String'];
-  finalized_block_number: Scalars['Int'];
-  hash: Scalars['Int'];
+  finalized_block_number: Scalars['String'];
+  hash: Scalars['String'];
   id: Scalars['ID'];
   inputs: EpochInputState;
 };
@@ -89,8 +87,8 @@ export type FinalizedEpoch = {
 export type FinalizedEpochInput = {
   epoch_number: Scalars['String'];
   finalized_block_hash: Scalars['String'];
-  finalized_block_number: Scalars['Int'];
-  hash: Scalars['Int'];
+  finalized_block_number: Scalars['String'];
+  hash: Scalars['String'];
   inputs: EpochInputStateInput;
 };
 
@@ -147,26 +145,25 @@ export type GetStatusResponse = {
 
 export type ImmutableState = {
   __typename?: 'ImmutableState';
-  challenge_period: Scalars['String'];
+  challenge_period: Scalars['Int'];
   contract_creation_timestamp: Scalars['String'];
   descartesv2_contract_address: Scalars['String'];
   dispute_contract_address: Scalars['String'];
   id: Scalars['ID'];
   input_contract_address: Scalars['String'];
-  input_duration: Scalars['String'];
-  output_contract_address: Scalars['String'];
+  input_duration: Scalars['Int'];
   validator_contract_address: Scalars['String'];
+  voucher_contract_address: Scalars['String'];
 };
 
 export type ImmutableStateInput = {
-  challenge_period: Scalars['String'];
-  contract_creation_timestamp: Scalars['String'];
+  challenge_period: Scalars['Int'];
   descartesv2_contract_address: Scalars['String'];
   dispute_contract_address: Scalars['String'];
   input_contract_address: Scalars['String'];
-  input_duration: Scalars['String'];
-  output_contract_address: Scalars['String'];
+  input_duration: Scalars['Int'];
   validator_contract_address: Scalars['String'];
+  voucher_contract_address: Scalars['String'];
 };
 
 export type Input = {
@@ -226,7 +223,7 @@ export type Mutation = {
   current_phase: PhaseState;
   finalized_epochs: Array<Maybe<FinalizedEpochs>>;
   initial_epoch: Scalars['String'];
-  output_state: OutputState;
+  voucher_state: VoucherState;
 };
 
 
@@ -260,8 +257,8 @@ export type MutationInitial_EpochArgs = {
 };
 
 
-export type MutationOutput_StateArgs = {
-  input: OutputStateInput;
+export type MutationVoucher_StateArgs = {
+  input: VoucherStateInput;
 };
 
 export type Notice = {
@@ -269,18 +266,6 @@ export type Notice = {
   keccak: Scalars['String'];
   keccak_in_notice_hashes: Scalars['String'];
   payload: Scalars['String'];
-};
-
-export type OutputState = {
-  __typename?: 'OutputState';
-  id: Scalars['ID'];
-  output_address: Scalars['String'];
-  outputs?: Maybe<IntegerObject>;
-};
-
-export type OutputStateInput = {
-  output_address: Scalars['String'];
-  outputs: IntegerObjectInput;
 };
 
 export enum PhaseState {
@@ -315,7 +300,7 @@ export type Query = {
   current_phase: Array<Maybe<PhaseState>>;
   finalized_epochs: Array<Maybe<FinalizedEpochs>>;
   initial_epoch: Scalars['String'];
-  output_state: Array<Maybe<OutputState>>;
+  voucher_state: Array<Maybe<VoucherState>>;
 };
 
 
@@ -345,6 +330,18 @@ export type Voucher = {
   keccak: Scalars['String'];
   keccak_in_voucher_hashes: Scalars['String'];
   payload: Scalars['String'];
+};
+
+export type VoucherState = {
+  __typename?: 'VoucherState';
+  id: Scalars['ID'];
+  voucher_address: Scalars['String'];
+  vouchers?: Maybe<IntegerObject>;
+};
+
+export type VoucherStateInput = {
+  voucher_address: Scalars['String'];
+  vouchers: IntegerObjectInput;
 };
 
 
@@ -449,8 +446,6 @@ export type ResolversTypes = {
   IntegerObjectInput: IntegerObjectInput;
   Mutation: ResolverTypeWrapper<{}>;
   Notice: ResolverTypeWrapper<Notice>;
-  OutputState: ResolverTypeWrapper<OutputState>;
-  OutputStateInput: OutputStateInput;
   PhaseState: PhaseState;
   ProcessedInput: ResolverTypeWrapper<ProcessedInput>;
   Query: ResolverTypeWrapper<{}>;
@@ -458,6 +453,8 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   TaintStatus: ResolverTypeWrapper<TaintStatus>;
   Voucher: ResolverTypeWrapper<Voucher>;
+  VoucherState: ResolverTypeWrapper<VoucherState>;
+  VoucherStateInput: VoucherStateInput;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -493,14 +490,14 @@ export type ResolversParentTypes = {
   IntegerObjectInput: IntegerObjectInput;
   Mutation: {};
   Notice: Notice;
-  OutputState: OutputState;
-  OutputStateInput: OutputStateInput;
   ProcessedInput: ProcessedInput;
   Query: {};
   Report: Report;
   String: Scalars['String'];
   TaintStatus: TaintStatus;
   Voucher: Voucher;
+  VoucherState: VoucherState;
+  VoucherStateInput: VoucherStateInput;
 };
 
 export type AccumulatingEpochResolvers<ContextType = any, ParentType extends ResolversParentTypes['AccumulatingEpoch'] = ResolversParentTypes['AccumulatingEpoch']> = {
@@ -517,9 +514,8 @@ export type DescartesV2StateResolvers<ContextType = any, ParentType extends Reso
   constants?: Resolver<Array<Maybe<ResolversTypes['ImmutableState']>>, ParentType, ContextType>;
   current_epoch?: Resolver<ResolversTypes['AccumulatingEpoch'], ParentType, ContextType>;
   current_phase?: Resolver<ResolversTypes['PhaseState'], ParentType, ContextType>;
-  finalized_epochs?: Resolver<Array<Maybe<ResolversTypes['FinalizedEpochs']>>, ParentType, ContextType>;
   initial_epoch?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  output_state?: Resolver<ResolversTypes['OutputState'], ParentType, ContextType>;
+  voucher_state?: Resolver<ResolversTypes['VoucherState'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -527,15 +523,15 @@ export type EpochInputStateResolvers<ContextType = any, ParentType extends Resol
   epoch_number?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   input_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  inputs?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
+  inputs?: Resolver<Array<Maybe<ResolversTypes['Input']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type FinalizedEpochResolvers<ContextType = any, ParentType extends ResolversParentTypes['FinalizedEpoch'] = ResolversParentTypes['FinalizedEpoch']> = {
   epoch_number?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   finalized_block_hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  finalized_block_number?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  hash?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  finalized_block_number?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   inputs?: Resolver<ResolversTypes['EpochInputState'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -577,15 +573,15 @@ export type GetStatusResponseResolvers<ContextType = any, ParentType extends Res
 };
 
 export type ImmutableStateResolvers<ContextType = any, ParentType extends ResolversParentTypes['ImmutableState'] = ResolversParentTypes['ImmutableState']> = {
-  challenge_period?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  challenge_period?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   contract_creation_timestamp?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   descartesv2_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   dispute_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   input_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  input_duration?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  output_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  input_duration?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   validator_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  voucher_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -627,20 +623,13 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   current_phase?: Resolver<ResolversTypes['PhaseState'], ParentType, ContextType, RequireFields<MutationCurrent_PhaseArgs, 'input'>>;
   finalized_epochs?: Resolver<Array<Maybe<ResolversTypes['FinalizedEpochs']>>, ParentType, ContextType, RequireFields<MutationFinalized_EpochsArgs, 'input'>>;
   initial_epoch?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationInitial_EpochArgs, 'input'>>;
-  output_state?: Resolver<ResolversTypes['OutputState'], ParentType, ContextType, RequireFields<MutationOutput_StateArgs, 'input'>>;
+  voucher_state?: Resolver<ResolversTypes['VoucherState'], ParentType, ContextType, RequireFields<MutationVoucher_StateArgs, 'input'>>;
 };
 
 export type NoticeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Notice'] = ResolversParentTypes['Notice']> = {
   keccak?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   keccak_in_notice_hashes?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   payload?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type OutputStateResolvers<ContextType = any, ParentType extends ResolversParentTypes['OutputState'] = ResolversParentTypes['OutputState']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  output_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  outputs?: Resolver<Maybe<ResolversTypes['IntegerObject']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -666,7 +655,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   current_phase?: Resolver<Array<Maybe<ResolversTypes['PhaseState']>>, ParentType, ContextType>;
   finalized_epochs?: Resolver<Array<Maybe<ResolversTypes['FinalizedEpochs']>>, ParentType, ContextType>;
   initial_epoch?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  output_state?: Resolver<Array<Maybe<ResolversTypes['OutputState']>>, ParentType, ContextType>;
+  voucher_state?: Resolver<Array<Maybe<ResolversTypes['VoucherState']>>, ParentType, ContextType>;
 };
 
 export type ReportResolvers<ContextType = any, ParentType extends ResolversParentTypes['Report'] = ResolversParentTypes['Report']> = {
@@ -688,6 +677,13 @@ export type VoucherResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type VoucherStateResolvers<ContextType = any, ParentType extends ResolversParentTypes['VoucherState'] = ResolversParentTypes['VoucherState']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  voucher_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vouchers?: Resolver<Maybe<ResolversTypes['IntegerObject']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
   AccumulatingEpoch?: AccumulatingEpochResolvers<ContextType>;
   DescartesV2State?: DescartesV2StateResolvers<ContextType>;
@@ -705,11 +701,11 @@ export type Resolvers<ContextType = any> = {
   IntegerObject?: IntegerObjectResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Notice?: NoticeResolvers<ContextType>;
-  OutputState?: OutputStateResolvers<ContextType>;
   ProcessedInput?: ProcessedInputResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Report?: ReportResolvers<ContextType>;
   TaintStatus?: TaintStatusResolvers<ContextType>;
   Voucher?: VoucherResolvers<ContextType>;
+  VoucherState?: VoucherStateResolvers<ContextType>;
 };
 

@@ -1,11 +1,11 @@
 # Query types
 type ImmutableState {
 	id: ID!
-	input_duration: String!
-	challenge_period: String!
+	input_duration: Int!
+	challenge_period: Int!
 	contract_creation_timestamp: String!
 	input_contract_address: String!
-	output_contract_address: String!
+	voucher_contract_address: String!
 	validator_contract_address: String!
 	dispute_contract_address: String!
 	descartesv2_contract_address: String!
@@ -21,18 +21,17 @@ type Input {
 type EpochInputState {
 	id: ID!
 	epoch_number: String!
-	# ID of the Input type
-	inputs: [ID]!
+	inputs: [Input]!
 	input_contract_address: String!
 }
 
 type FinalizedEpoch {
 	id: ID!
 	epoch_number: String!
-	hash: Int!
+	hash: String!
 	inputs: EpochInputState!
 	finalized_block_hash: String!
-	finalized_block_number: Int!
+	finalized_block_number: String!
 }
 
 type FinalizedEpochs {
@@ -72,20 +71,19 @@ type IntegerObject {
 	integer: IntegerInnerObject
 }
 
-type OutputState {
+type VoucherState {
 	id: ID!
-	output_address: String!
-	outputs: IntegerObject
+	voucher_address: String!
+	vouchers: IntegerObject
 }
 
 type DescartesV2State {
 	block_hash: ID!
 	constants: [ImmutableState]!
 	initial_epoch: String!
-	finalized_epochs: [FinalizedEpochs]!
 	current_epoch: AccumulatingEpoch!
 	current_phase: PhaseState!
-	output_state: OutputState!
+	voucher_state: VoucherState!
 }
 
 type GetStatusResponse {
@@ -166,11 +164,11 @@ type GetEpochStatusResponse {
 
 # Mutation Inputs
 input ImmutableStateInput {
-	input_duration: String!
-	challenge_period: String!
-	contract_creation_timestamp: String!
+	input_duration: Int!
+	challenge_period: Int!
+	# contract_creation_timestamp: String!
 	input_contract_address: String!
-	output_contract_address: String!
+	voucher_contract_address: String!
 	validator_contract_address: String!
 	dispute_contract_address: String!
 	descartesv2_contract_address: String!
@@ -190,10 +188,10 @@ input EpochInputStateInput {
 
 input FinalizedEpochInput {
 	epoch_number: String!
-	hash: Int!
+	hash: String!
 	inputs: EpochInputStateInput!
 	finalized_block_hash: String!
-	finalized_block_number: Int!
+	finalized_block_number: String!
 }
 
 input FinalizedEpochsInput {
@@ -221,18 +219,17 @@ input IntegerObjectInput {
 	integer: IntegerInnerObjectInput!
 }
 
-input OutputStateInput {
-	output_address: String!
-	outputs: IntegerObjectInput!
+input VoucherStateInput {
+	voucher_address: String!
+	vouchers: IntegerObjectInput!
 }
 
 input DescartesInput {
 	constants: [ImmutableStateInput]!
 	initial_epoch: String!
-	finalized_epochs: [FinalizedEpochsInput]!
 	current_epoch: AccumulatingEpochInput!
 	current_phase: PhaseState!
-	output_state: OutputStateInput!
+	voucher_state: VoucherStateInput!
 }
 
 input GetSessionStatusRequest {
@@ -250,7 +247,7 @@ type Query {
 	finalized_epochs: [FinalizedEpochs]!
 	current_epoch: [AccumulatingEpoch]!
 	current_phase: [PhaseState]!
-	output_state: [OutputState]!
+	voucher_state: [VoucherState]!
 	DescartesState: [DescartesV2State]!
 	GetVersion: String!
 	GetStatus: GetStatusResponse!
@@ -264,6 +261,6 @@ type Mutation {
 	finalized_epochs(input: [FinalizedEpochsInput]!): [FinalizedEpochs]!
 	current_epoch(input: AccumulatingEpochInput!): AccumulatingEpoch!
 	current_phase(input: PhaseState!): PhaseState!
-	output_state(input: OutputStateInput!): OutputState!
+	voucher_state(input: VoucherStateInput!): VoucherState!
 	DescartesState(input: DescartesInput!): DescartesV2State!
 }

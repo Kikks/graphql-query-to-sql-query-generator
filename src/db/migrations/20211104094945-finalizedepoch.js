@@ -13,7 +13,7 @@ module.exports = {
 				allowNull: false
 			},
 			hash: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			epochInputStateId: {
@@ -25,7 +25,7 @@ module.exports = {
 				allowNull: false
 			},
 			finalized_block_number: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			FinalizedEpochId: {

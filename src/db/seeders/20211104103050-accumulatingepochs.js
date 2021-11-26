@@ -16,7 +16,8 @@ module.exports = {
 					id: inputId1,
 					sender: "Sender 1",
 					timestamp: "Timestamp 1",
-					payload: [inputId1, inputId2],
+					payload: ["Payload 1"],
+					epoch_input_state_id: epochInputId1,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				},
@@ -24,7 +25,8 @@ module.exports = {
 					id: inputId2,
 					sender: "Sender 2",
 					timestamp: "Timestamp 2",
-					payload: [inputId1, inputId2],
+					payload: ["Payload 2"],
+					epoch_input_state_id: epochInputId2,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}
@@ -38,8 +40,14 @@ module.exports = {
 				{
 					id: epochInputId1,
 					epoch_number: "1",
-					inputs: [uuidv4()],
 					input_contract_address: "Address 1",
+					createdAt: new Date(),
+					updatedAt: new Date()
+				},
+				{
+					id: epochInputId2,
+					epoch_number: "1",
+					input_contract_address: "Address 2",
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}

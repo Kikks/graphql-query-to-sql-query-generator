@@ -1,10 +1,10 @@
 "use strict";
 import { Model, UUIDV4 } from "sequelize";
 
-interface OutputStateAttributes {
+interface VoucherStateAttributes {
 	id: string;
-	output_address: string;
-	outputs: {
+	voucher_address: string;
+	vouchers: {
 		integer: {
 			integer: {
 				integer: boolean;
@@ -17,11 +17,11 @@ interface OutputStateAttributes {
 }
 
 module.exports = (sequelize: any, DataTypes: any) => {
-	class OutputState extends Model<OutputStateAttributes>
-		implements OutputStateAttributes {
+	class VoucherState extends Model<VoucherStateAttributes>
+		implements VoucherStateAttributes {
 		id!: string;
-		output_address!: string;
-		outputs!: {
+		voucher_address!: string;
+		vouchers!: {
 			integer: {
 				integer: {
 					integer: boolean;
@@ -32,7 +32,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		createdAt!: string;
 		updatedAt!: string;
 	}
-	OutputState.init(
+	VoucherState.init(
 		{
 			id: {
 				type: DataTypes.UUID,
@@ -40,11 +40,11 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				allowNull: false,
 				primaryKey: true
 			},
-			output_address: {
+			voucher_address: {
 				type: DataTypes.STRING,
 				allowNull: false
 			},
-			outputs: {
+			vouchers: {
 				type: DataTypes.JSON,
 				allowNull: false
 			},
@@ -58,8 +58,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		},
 		{
 			sequelize,
-			modelName: "OutputState"
+			modelName: "VoucherState"
 		}
 	);
-	return OutputState;
+	return VoucherState;
 };

@@ -9,22 +9,22 @@ module.exports = {
 				primaryKey: true
 			},
 			input_duration: {
-				type: Sequelize.STRING,
+				type: Sequelize.INTEGER,
 				allowNull: false
 			},
 			challenge_period: {
-				type: Sequelize.STRING,
+				type: Sequelize.INTEGER,
 				allowNull: false
 			},
 			contract_creation_timestamp: {
-				type: Sequelize.STRING,
+				type: Sequelize.DATE,
 				allowNull: false
 			},
 			input_contract_address: {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			output_contract_address: {
+			voucher_contract_address: {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
@@ -40,7 +40,7 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			descartes_hash: Sequelize.UUID,
+			descartes_hash: Sequelize.STRING,
 			createdAt: {
 				type: Sequelize.DATE,
 				allowNull: false

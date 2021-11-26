@@ -5,10 +5,9 @@ interface DescartesV2StateAttributes {
 	block_hash: string;
 	constants: string[];
 	initial_epoch: string;
-	finalized_epochs: string[];
 	current_epoch: string;
 	current_phase: string;
-	output_state: string;
+	voucher_state: string;
 	createdAt: string;
 	updatedAt: string;
 }
@@ -19,24 +18,20 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		block_hash!: string;
 		constants!: string[];
 		initial_epoch!: string;
-		finalized_epochs!: string[];
 		current_epoch!: string;
 		current_phase!: string;
-		output_state!: string;
+		voucher_state!: string;
 		createdAt!: string;
 		updatedAt!: string;
 
 		static associate(models: any) {
 			DescartesV2State.hasMany(models.ImmutableState, {
 				foreignKey: "descartes_hash"
-      });
-      DescartesV2State.hasMany(models.FinalizedEpochs, {
+			});
+			DescartesV2State.hasOne(models.AccumulatingEpoch, {
 				foreignKey: "descartes_hash"
-      });
-      DescartesV2State.hasOne(models.AccumulatingEpoch, {
-				foreignKey: "descartes_hash"
-      });
-      DescartesV2State.hasOne(models.OutputState, {
+			});
+			DescartesV2State.hasOne(models.VoucherState, {
 				foreignKey: "descartes_hash"
 			});
 		}
@@ -51,10 +46,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			},
 			constants: DataTypes.ARRAY(DataTypes.UUID),
 			initial_epoch: DataTypes.STRING,
-			finalized_epochs: DataTypes.ARRAY(DataTypes.UUID),
 			current_epoch: DataTypes.UUID,
 			current_phase: DataTypes.STRING,
-			output_state: DataTypes.UUID,
+			voucher_state: DataTypes.UUID,
 			createdAt: {
 				allowNull: false,
 				type: DataTypes.DATE

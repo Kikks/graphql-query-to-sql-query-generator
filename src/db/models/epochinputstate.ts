@@ -4,7 +4,6 @@ import { Model, UUIDV4 } from "sequelize";
 export interface EpochInputStateAttributes {
 	id: string;
 	epoch_number: number;
-	inputs: [string];
 	input_contract_address: string;
 	createdAt: string;
 	updatedAt: string;
@@ -15,7 +14,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		implements EpochInputStateAttributes {
 		id!: string;
 		epoch_number!: number;
-		inputs!: [string];
 		input_contract_address!: string;
 		createdAt!: string;
 		updatedAt!: string;
@@ -26,6 +24,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			});
 			EpochInputState.hasOne(models.AccumulatingEpoch, {
 				foreignKey: "epochInputStateId"
+			});
+			EpochInputState.hasMany(models.Input, {
+				foreignKey: "epoch_input_state_id"
 			});
 		}
 	}
@@ -44,9 +45,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			input_contract_address: {
 				type: DataTypes.STRING,
 				allowNull: false
-			},
-			inputs: {
-				type: DataTypes.ARRAY(DataTypes.UUID)
 			},
 			createdAt: {
 				type: DataTypes.DATE

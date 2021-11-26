@@ -2,21 +2,21 @@
 
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		await queryInterface.createTable("OutputStates", {
+		await queryInterface.createTable("VoucherStates", {
 			id: {
 				type: Sequelize.UUID,
 				allowNull: false,
 				primaryKey: true
 			},
-			output_address: {
+			voucher_address: {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			outputs: {
+			vouchers: {
 				type: Sequelize.JSON,
 				allowNull: false
 			},
-			descartes_hash: Sequelize.UUID,
+			descartes_hash: Sequelize.STRING,
 			createdAt: {
 				type: Sequelize.DATE,
 				allowNull: false
@@ -29,6 +29,6 @@ module.exports = {
 	},
 
 	down: async (queryInterface, Sequelize) => {
-		await queryInterface.dropTable("OutputStates");
+		await queryInterface.dropTable("VoucherStates");
 	}
 };

@@ -47,6 +47,18 @@ export default {
 				sqlPaginate: true,
 				orderBy: '"createdAt"'
 			}
+		},
+		fields: {
+			inputs: {
+				extensions: {
+					joinMonster: {
+						sqlTable: '"Inputs"',
+						uniqueKey: "id",
+						sqlJoin: (epochInputStateTable: any, inputTable: any) =>
+							`${epochInputStateTable}.id = ${inputTable}."epoch_input_state_id"`
+					}
+				}
+			}
 		}
 	},
 	FinalizedEpochs: {
@@ -113,10 +125,10 @@ export default {
 			}
 		}
 	},
-	OutputState: {
+	VoucherState: {
 		extensions: {
 			joinMonster: {
-				sqlTable: '"OutputStates"',
+				sqlTable: '"VoucherStates"',
 				uniqueKey: "id",
 				sqlPaginate: true,
 				orderBy: '"createdAt"'
@@ -142,16 +154,6 @@ export default {
 					}
 				}
 			},
-			finalized_epochs: {
-				extensions: {
-					joinMonster: {
-						sqlTable: '"FinalizedEpochs"',
-						uniqueKey: "id",
-						sqlJoin: (descartesV2StateTable: any, finalizedEpochsTable: any) =>
-							`${descartesV2StateTable}.block_hash = ${finalizedEpochsTable}.descartes_hash`
-					}
-				}
-			},
 			current_epoch: {
 				extensions: {
 					joinMonster: {
@@ -165,13 +167,13 @@ export default {
 					}
 				}
 			},
-			output_state: {
+			voucher_state: {
 				extensions: {
 					joinMonster: {
-						sqlTable: '"OutputStates"',
+						sqlTable: '"VoucherStates"',
 						uniqueKey: "id",
-						sqlJoin: (descartesV2StateTable: any, outputStateTable: any) =>
-							`${descartesV2StateTable}.block_hash = ${outputStateTable}.descartes_hash`
+						sqlJoin: (descartesV2StateTable: any, voucherStateTable: any) =>
+							`${descartesV2StateTable}.block_hash = ${voucherStateTable}.descartes_hash`
 					}
 				}
 			}

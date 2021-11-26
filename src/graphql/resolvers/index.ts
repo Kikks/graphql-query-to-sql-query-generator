@@ -7,12 +7,12 @@ import {
 	FinalizedEpochs,
 	ImmutableState,
 	AccumulatingEpoch,
-	OutputState,
+	VoucherState,
 	PhaseState,
 	ImmutableStateInput,
 	FinalizedEpochsInput,
 	AccumulatingEpochInput,
-	OutputStateInput,
+	VoucherStateInput,
 	DescartesInput,
 	DescartesV2State,
 	GetStatusResponse,
@@ -60,7 +60,7 @@ export const UserResolvers: IResolvers = {
 			return PhaseState.AwaitingConsensusAfterConflict;
 		},
 
-		async output_state(_: void, args, {}, info): Promise<OutputState> {
+		async voucher_state(_: void, args, {}, info): Promise<VoucherState> {
 			try {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);
@@ -172,12 +172,12 @@ export const UserResolvers: IResolvers = {
 					const newData = await db.ImmutableState.create({
 						id: uuidv4(),
 						challenge_period: item?.challenge_period,
-						contract_creation_timestamp: item?.contract_creation_timestamp,
+						contract_creation_timestamp: new Date(),
 						descartesv2_contract_address: item?.descartesv2_contract_address,
 						dispute_contract_address: item?.dispute_contract_address,
 						input_contract_address: item?.input_contract_address,
 						input_duration: item?.input_duration,
-						output_contract_address: item?.output_contract_address,
+						voucher_contract_address: item?.voucher_contract_address,
 						validator_contract_address: item?.validator_contract_address,
 						createdAt: new Date(),
 						updatedAt: new Date()
@@ -227,17 +227,17 @@ export const UserResolvers: IResolvers = {
 									id: uuidv4(),
 									sender: input?.sender,
 									timestamp: input?.timestamp,
-									payload: input?.payload
+									payload: input?.payload,
+									epoch_input_state_id: epochInputStateId
 								});
 
-								inputs.push(newInput.id);
+								inputs.push(newInput);
 							}
 						}
 
 						epochInputState = await db.EpochInputState.create({
 							id: epochInputStateId,
 							epoch_number: finalizedEpoch?.inputs?.epoch_number,
-							inputs,
 							input_contract_address:
 								finalizedEpoch?.inputs?.input_contract_address,
 							createdAt: new Date(),
@@ -257,7 +257,12 @@ export const UserResolvers: IResolvers = {
 							updatedAt: new Date()
 						});
 
-						newFinalizedEpoch.inputs = epochInputState;
+						newFinalizedEpoch.inputs = {
+							id: epochInputState?.id,
+							epoch_number: epochInputState?.epoch_number,
+							input_contract_address: epochInputState?.input_contract_address,
+							inputs
+						};
 						finalized_epochs.push(newFinalizedEpoch);
 					}
 
@@ -284,7 +289,7 @@ export const UserResolvers: IResolvers = {
 		): Promise<AccumulatingEpoch> {
 			try {
 				const epochInputStateId = uuidv4();
-				const inputIds = [];
+				const inputsArray = [];
 
 				if (inputs?.inputs) {
 					for (const input of inputs?.inputs) {
@@ -292,17 +297,17 @@ export const UserResolvers: IResolvers = {
 							id: uuidv4(),
 							sender: input?.sender,
 							timestamp: input?.timestamp,
-							payload: input?.payload
+							payload: input?.payload,
+							epoch_input_state_id: epochInputStateId
 						});
 
-						inputIds.push(newInput.id);
+						inputsArray.push(newInput);
 					}
 				}
 
 				const epochInputState = await db.EpochInputState.create({
 					id: epochInputStateId,
 					epoch_number: inputs?.epoch_number,
-					inputs: inputIds,
 					input_contract_address: inputs?.input_contract_address,
 					createdAt: new Date(),
 					updatedAt: new Date()
@@ -318,7 +323,12 @@ export const UserResolvers: IResolvers = {
 					updatedAt: new Date()
 				});
 
-				accumulatingEpoch.inputs = epochInputState;
+				accumulatingEpoch.inputs = {
+					id: epochInputState?.id,
+					epoch_number: epochInputState?.epoch_number,
+					input_contract_address: epochInputState?.input_contract_address,
+					inputs: inputsArray
+				};
 
 				return accumulatingEpoch;
 			} catch (error: any) {
@@ -330,20 +340,20 @@ export const UserResolvers: IResolvers = {
 			return input;
 		},
 
-		async output_state(
+		async voucher_state(
 			_: void,
-			{ input: { output_address, outputs } }: { input: OutputStateInput }
-		): Promise<OutputState> {
+			{ input: { voucher_address, vouchers } }: { input: VoucherStateInput }
+		): Promise<VoucherState> {
 			try {
-				const outputState = await db.OutputState.create({
+				const VoucherState = await db.VoucherState.create({
 					id: uuidv4(),
-					output_address,
-					outputs,
+					voucher_address,
+					vouchers,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				});
 
-				return outputState;
+				return VoucherState;
 			} catch (error: any) {
 				throw new Error(error);
 			}
@@ -358,12 +368,11 @@ export const UserResolvers: IResolvers = {
 				const immutableStateIds: string[] = [];
 				const finalizedEpochsIds: string[] = [];
 				const accumulatingEpochId = uuidv4();
-				const outputStateId = uuidv4();
+				const VoucherStateId = uuidv4();
 
 				const constants: ImmutableState[] = [];
-				const finalizedEpochsArray: FinalizedEpochs[] = [];
 				let current_epoch: AccumulatingEpoch;
-				let output_state: OutputState;
+				let voucher_state: VoucherState;
 
 				// Create Immutable States
 				try {
@@ -371,12 +380,12 @@ export const UserResolvers: IResolvers = {
 						const newData = await db.ImmutableState.create({
 							id: uuidv4(),
 							challenge_period: item?.challenge_period,
-							contract_creation_timestamp: item?.contract_creation_timestamp,
+							contract_creation_timestamp: new Date(),
 							descartesv2_contract_address: item?.descartesv2_contract_address,
 							dispute_contract_address: item?.dispute_contract_address,
 							input_contract_address: item?.input_contract_address,
 							input_duration: item?.input_duration,
-							output_contract_address: item?.output_contract_address,
+							voucher_contract_address: item?.voucher_contract_address,
 							validator_contract_address: item?.validator_contract_address,
 							descartes_hash,
 							createdAt: new Date(),
@@ -389,82 +398,10 @@ export const UserResolvers: IResolvers = {
 					throw Error(error);
 				}
 
-				// Create Finalized Epochs
-				try {
-					for (const item of input?.finalized_epochs) {
-						const parentId = uuidv4();
-						const finalized_epochs = [];
-
-						const finalizedEpochs = await db.FinalizedEpochs.create({
-							id: parentId,
-							initial_epoch: item?.initial_epoch,
-							descartesv2_contract_address: item?.descartesv2_contract_address,
-							input_contract_address: item?.input_contract_address,
-							descartes_hash,
-							createdAt: new Date(),
-							updatedAt: new Date()
-						});
-
-						if (item?.finalized_epochs) {
-							for (const finalizedEpoch of item?.finalized_epochs) {
-								const epochInputStateId = uuidv4();
-								let epochInputState: EpochInputState;
-								const inputs = [];
-
-								if (finalizedEpoch?.inputs?.inputs) {
-									for (const input of finalizedEpoch?.inputs?.inputs) {
-										const newInput = await db.Input.create({
-											id: uuidv4(),
-											sender: input?.sender,
-											timestamp: input?.timestamp,
-											payload: input?.payload
-										});
-
-										inputs.push(newInput.id);
-									}
-								}
-
-								epochInputState = await db.EpochInputState.create({
-									id: epochInputStateId,
-									epoch_number: finalizedEpoch?.inputs?.epoch_number,
-									inputs,
-									input_contract_address:
-										finalizedEpoch?.inputs?.input_contract_address,
-									createdAt: new Date(),
-									updatedAt: new Date()
-								});
-
-								const newFinalizedEpoch = await db.FinalizedEpoch.create({
-									id: uuidv4(),
-									epoch_number: finalizedEpoch?.epoch_number,
-									hash: finalizedEpoch?.hash,
-									inputs: finalizedEpoch?.inputs,
-									finalized_block_hash: finalizedEpoch?.finalized_block_hash,
-									finalized_block_number:
-										finalizedEpoch?.finalized_block_number,
-									FinalizedEpochId: parentId,
-									epochInputStateId,
-									createdAt: new Date(),
-									updatedAt: new Date()
-								});
-
-								newFinalizedEpoch.inputs = epochInputState;
-								finalizedEpochsIds.push(newFinalizedEpoch?.id);
-								finalized_epochs.push(newFinalizedEpoch);
-							}
-						}
-
-						finalizedEpochs.finalized_epochs = finalized_epochs;
-						finalizedEpochsArray.push(finalizedEpochs);
-					}
-				} catch (error: any) {
-					throw new Error(error);
-				}
-
 				// Create Accumulated Epoch
 				try {
 					const epochInputStateId = uuidv4();
-					const inputIds = [];
+					const inputsArray = [];
 
 					if (input?.current_epoch?.inputs?.inputs) {
 						for (const item of input?.current_epoch?.inputs?.inputs) {
@@ -472,17 +409,17 @@ export const UserResolvers: IResolvers = {
 								id: uuidv4(),
 								sender: item?.sender,
 								timestamp: item?.timestamp,
-								payload: item?.payload
+								payload: item?.payload,
+								epoch_input_state_id: epochInputStateId
 							});
 
-							inputIds.push(newInput.id);
+							inputsArray.push(newInput);
 						}
 					}
 
 					const epochInputState = await db.EpochInputState.create({
 						id: epochInputStateId,
 						epoch_number: input?.current_epoch?.inputs?.epoch_number,
-						inputs: inputIds,
 						input_contract_address:
 							input?.current_epoch?.inputs?.input_contract_address,
 						createdAt: new Date(),
@@ -502,24 +439,29 @@ export const UserResolvers: IResolvers = {
 						updatedAt: new Date()
 					});
 
-					accumulatingEpoch.inputs = epochInputState;
+					accumulatingEpoch.inputs = {
+						id: epochInputState?.id,
+						epoch_number: epochInputState?.epoch_number,
+						input_contract_address: epochInputState?.input_contract_address,
+						inputs: inputsArray
+					};
 					current_epoch = accumulatingEpoch;
 				} catch (error: any) {
 					throw new Error(error);
 				}
 
-				// Create Output State
+				// Create Voucher State
 				try {
-					const outputState = await db.OutputState.create({
-						id: outputStateId,
-						output_address: input?.output_state?.output_address,
-						outputs: input?.output_state?.outputs,
+					const VoucherState = await db.VoucherState.create({
+						id: VoucherStateId,
+						voucher_address: input?.voucher_state?.voucher_address,
+						vouchers: input?.voucher_state?.vouchers,
 						descartes_hash,
 						createdAt: new Date(),
 						updatedAt: new Date()
 					});
 
-					output_state = outputState;
+					voucher_state = VoucherState;
 				} catch (error: any) {
 					throw new Error(error);
 				}
@@ -531,7 +473,7 @@ export const UserResolvers: IResolvers = {
 					finalized_epochs: finalizedEpochsIds,
 					current_epoch: accumulatingEpochId,
 					current_phase: input?.current_phase,
-					output_state: outputStateId,
+					voucher_state: VoucherStateId,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				});
@@ -540,10 +482,9 @@ export const UserResolvers: IResolvers = {
 					block_hash: descartes_hash,
 					constants,
 					initial_epoch: input?.initial_epoch,
-					finalized_epochs: finalizedEpochsArray,
 					current_epoch,
 					current_phase: input?.current_phase,
-					output_state
+					voucher_state
 				};
 			} catch (error: any) {
 				throw new Error(error);

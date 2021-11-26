@@ -19,6 +19,7 @@ module.exports = {
 					sender: "Sender 1",
 					timestamp: "Timestamp 1",
 					payload: ["Payload 1"],
+					epoch_input_state_id: epochInputId1,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				},
@@ -27,6 +28,7 @@ module.exports = {
 					sender: "Sender 2",
 					timestamp: "Timestamp 2",
 					payload: ["Payload 2"],
+					epoch_input_state_id: epochInputId2,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}
@@ -40,7 +42,6 @@ module.exports = {
 				{
 					id: epochInputId1,
 					epoch_number: "1",
-					inputs: [inputId1, inputId2],
 					input_contract_address: "Address 1",
 					createdAt: new Date(),
 					updatedAt: new Date()
@@ -48,7 +49,6 @@ module.exports = {
 				{
 					id: epochInputId2,
 					epoch_number: "1",
-					inputs: [inputId1, inputId2],
 					input_contract_address: "Address 2",
 					createdAt: new Date(),
 					updatedAt: new Date()
@@ -86,9 +86,9 @@ module.exports = {
 				{
 					id: uuidv4(),
 					epoch_number: "10",
-					hash: 20,
+					hash: 'Some hash I guess',
 					finalized_block_hash: "Hash",
-					finalized_block_number: 30,
+					finalized_block_number: '30',
 					epochInputStateId: epochInputId1,
 					FinalizedEpochId: parentId1,
 					createdAt: new Date(),
@@ -97,9 +97,9 @@ module.exports = {
 				{
 					id: uuidv4(),
 					epoch_number: "50",
-					hash: 60,
+					hash: 'Some hash I guess',
 					finalized_block_hash: "Hash",
-					finalized_block_number: 70,
+					finalized_block_number: '70',
 					FinalizedEpochId: parentId2,
 					epochInputStateId: epochInputId2,
 					createdAt: new Date(),

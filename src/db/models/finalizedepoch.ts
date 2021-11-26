@@ -4,7 +4,7 @@ import { Model, UUIDV4 } from "sequelize";
 export interface FinalizedEpochAttributes {
 	id: string;
 	epoch_number: string;
-	hash: number;
+	hash: string;
 	finalized_block_hash: string;
 	finalized_block_number: number;
 	epochInputStateId: string;
@@ -18,7 +18,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		implements FinalizedEpochAttributes {
 		id!: string;
 		epoch_number!: string;
-		hash!: number;
+		hash!: string;
 		finalized_block_hash!: string;
 		finalized_block_number!: number;
 		epochInputStateId!: string;
@@ -39,7 +39,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				allowNull: false
 			},
 			hash: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 				allowNull: false
 			},
 			finalized_block_hash: {
@@ -47,7 +47,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				allowNull: false
 			},
 			finalized_block_number: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 				allowNull: false
 			},
 			epochInputStateId: {

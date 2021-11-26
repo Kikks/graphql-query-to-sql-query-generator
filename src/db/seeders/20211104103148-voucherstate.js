@@ -4,19 +4,19 @@ const { v4: uuidv4 } = require("uuid");
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
 		await queryInterface.bulkInsert(
-			"OutputStates",
+			"VoucherStates",
 			[
 				{
 					id: uuidv4(),
-					output_address: "Output address 1",
-					outputs: `{ "intger": { "integer": { "integer": false } } }`,
+					voucher_address: "voucher address 1",
+					vouchers: `{ "intger": { "integer": { "integer": false } } }`,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				},
 				{
 					id: uuidv4(),
-					output_address: "Output address 2",
-					outputs: `{ "intger": { "integer": { "integer": false } } }`,
+					voucher_address: "voucher address 2",
+					vouchers: `{ "intger": { "integer": { "integer": false } } }`,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}
@@ -26,6 +26,6 @@ module.exports = {
 	},
 
 	down: async (queryInterface, Sequelize) => {
-		await queryInterface.bulkDelete("OutputStates", null, {});
+		await queryInterface.bulkDelete("VoucherStates", null, {});
 	}
 };

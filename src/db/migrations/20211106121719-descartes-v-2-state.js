@@ -15,20 +15,15 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			finalized_epochs: {
-				type: Sequelize.ARRAY(Sequelize.STRING),
-				allowNull: false
-			},
 			current_epoch: {
 				type: Sequelize.UUID,
 				allowNull: false
 			},
 			current_phase: {
 				type: Sequelize.STRING,
-				output_state: Sequelize.UUID,
 				allowNull: false
 			},
-			output_state: {
+			voucher_state: {
 				type: Sequelize.UUID,
 				allowNull: false
 			},

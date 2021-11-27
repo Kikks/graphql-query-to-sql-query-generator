@@ -76,6 +76,7 @@ query voucher_state {
 
 query descartes {
   DescartesState {
+    id
     block_hash
     constants {
       id

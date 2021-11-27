@@ -2,6 +2,7 @@
 import { Model, UUID } from "sequelize";
 
 interface DescartesV2StateAttributes {
+	id: string;
 	block_hash: string;
 	constants: string[];
 	initial_epoch: string;
@@ -15,6 +16,7 @@ interface DescartesV2StateAttributes {
 module.exports = (sequelize: any, DataTypes: any) => {
 	class DescartesV2State extends Model<DescartesV2StateAttributes>
 		implements DescartesV2StateAttributes {
+		id!: string;
 		block_hash!: string;
 		constants!: string[];
 		initial_epoch!: string;
@@ -38,11 +40,15 @@ module.exports = (sequelize: any, DataTypes: any) => {
 	}
 	DescartesV2State.init(
 		{
-			block_hash: {
+			id: {
 				type: DataTypes.UUID,
 				defaultValue: UUID,
 				allowNull: false,
 				primaryKey: true
+			},
+			block_hash: {
+				type: DataTypes.STRING,
+				allowNull: false
 			},
 			constants: DataTypes.ARRAY(DataTypes.UUID),
 			initial_epoch: DataTypes.STRING,

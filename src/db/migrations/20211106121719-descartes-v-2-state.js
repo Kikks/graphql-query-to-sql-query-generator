@@ -2,10 +2,14 @@
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
 		await queryInterface.createTable("DescartesV2States", {
-			block_hash: {
+			id: {
 				allowNull: false,
 				primaryKey: true,
 				type: Sequelize.UUID
+			},
+			block_hash: {
+				type: Sequelize.STRING,
+				allowNull: false
 			},
 			constants: {
 				type: Sequelize.ARRAY(Sequelize.STRING),

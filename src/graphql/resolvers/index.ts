@@ -1,5 +1,6 @@
 require("dotenv").config();
 import { IResolvers } from "graphql-tools";
+import { UserInputError } from "apollo-server-express";
 import { v4 as uuidv4 } from "uuid";
 import {
 	FinalizedEpoch,
@@ -364,7 +365,20 @@ export const UserResolvers: IResolvers = {
 			{ input }: { input: DescartesInput }
 		): Promise<DescartesV2State> {
 			try {
-				const descartes_hash = uuidv4();
+				const existingDescartes = await db.DescartesV2State.findOne({
+					where: { block_hash: input.block_hash }
+				});
+
+				if (existingDescartes) {
+					throw new UserInputError(
+						"A DescartesV2State with that block_hash already exists",
+						{
+							message: "A DescartesV2State with that block_hash already exists"
+						}
+					);
+				}
+
+				const descartes_hash = input.block_hash;
 				const immutableStateIds: string[] = [];
 				const finalizedEpochsIds: string[] = [];
 				const accumulatingEpochId = uuidv4();
@@ -466,7 +480,8 @@ export const UserResolvers: IResolvers = {
 					throw new Error(error);
 				}
 
-				await db.DescartesV2State.create({
+				const descartes = await db.DescartesV2State.create({
+					id: uuidv4(),
 					block_hash: descartes_hash,
 					constants: immutableStateIds,
 					initial_epoch: input?.initial_epoch,
@@ -479,6 +494,7 @@ export const UserResolvers: IResolvers = {
 				});
 
 				return {
+					id: descartes.id,
 					block_hash: descartes_hash,
 					constants,
 					initial_epoch: input?.initial_epoch,

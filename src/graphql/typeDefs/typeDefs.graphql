@@ -78,7 +78,8 @@ type VoucherState {
 }
 
 type DescartesV2State {
-	block_hash: ID!
+	id: ID!
+	block_hash: String!
 	constants: [ImmutableState]!
 	initial_epoch: String!
 	current_epoch: AccumulatingEpoch!
@@ -225,6 +226,7 @@ input VoucherStateInput {
 }
 
 input DescartesInput {
+	block_hash: String!
 	constants: [ImmutableStateInput]!
 	initial_epoch: String!
 	current_epoch: AccumulatingEpochInput!

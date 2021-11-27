@@ -1,7 +1,7 @@
 "use strict";
 const { v4: uuidv4 } = require("uuid");
 
-const descartes_hash = uuidv4();
+const descartes_hash = "a particular hash";
 const parentId1 = uuidv4();
 const parentId2 = uuidv4();
 
@@ -139,6 +139,7 @@ module.exports = {
 			"DescartesV2States",
 			[
 				{
+					id: uuidv4(),
 					block_hash: descartes_hash,
 					constants: [immutableStateId1, immutableStateId2],
 					initial_epoch: "1234567890",

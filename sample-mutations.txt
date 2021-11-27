@@ -143,6 +143,7 @@ mutation createVoucherState {
 mutation createDescartes {
   DescartesState(
     input: {
+      block_hash: "another hash"
       constants: [
         {
           input_duration: 5678
@@ -192,6 +193,7 @@ mutation createDescartes {
       }
     }
   ) {
+    id
     block_hash
     constants {
       id

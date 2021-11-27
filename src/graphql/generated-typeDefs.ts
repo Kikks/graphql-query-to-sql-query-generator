@@ -38,6 +38,7 @@ export enum CompletionStatus {
 }
 
 export type DescartesInput = {
+  block_hash: Scalars['String'];
   constants: Array<Maybe<ImmutableStateInput>>;
   current_epoch: AccumulatingEpochInput;
   current_phase: PhaseState;
@@ -47,10 +48,11 @@ export type DescartesInput = {
 
 export type DescartesV2State = {
   __typename?: 'DescartesV2State';
-  block_hash: Scalars['ID'];
+  block_hash: Scalars['String'];
   constants: Array<Maybe<ImmutableState>>;
   current_epoch: AccumulatingEpoch;
   current_phase: PhaseState;
+  id: Scalars['ID'];
   initial_epoch: Scalars['String'];
   voucher_state: VoucherState;
 };
@@ -510,10 +512,11 @@ export type AccumulatingEpochResolvers<ContextType = any, ParentType extends Res
 };
 
 export type DescartesV2StateResolvers<ContextType = any, ParentType extends ResolversParentTypes['DescartesV2State'] = ResolversParentTypes['DescartesV2State']> = {
-  block_hash?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  block_hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   constants?: Resolver<Array<Maybe<ResolversTypes['ImmutableState']>>, ParentType, ContextType>;
   current_epoch?: Resolver<ResolversTypes['AccumulatingEpoch'], ParentType, ContextType>;
   current_phase?: Resolver<ResolversTypes['PhaseState'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   initial_epoch?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   voucher_state?: Resolver<ResolversTypes['VoucherState'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

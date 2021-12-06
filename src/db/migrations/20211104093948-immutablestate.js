@@ -9,11 +9,11 @@ module.exports = {
 				primaryKey: true
 			},
 			input_duration: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			challenge_period: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			contract_creation_timestamp: {
@@ -40,7 +40,7 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			descartes_hash: Sequelize.STRING,
+			rollups_hash: Sequelize.STRING,
 			createdAt: {
 				type: Sequelize.DATE,
 				allowNull: false

@@ -1,7 +1,7 @@
 "use strict";
 const { v4: uuidv4 } = require("uuid");
 
-const descartes_hash = "a particular hash";
+const rollups_hash = "a particular hash";
 const parentId1 = uuidv4();
 const parentId2 = uuidv4();
 
@@ -35,7 +35,7 @@ module.exports = {
 					validator_contract_address: "Address 1",
 					dispute_contract_address: "Address 1",
 					descartesv2_contract_address: "Address 1",
-					descartes_hash,
+					rollups_hash,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				},
@@ -49,7 +49,7 @@ module.exports = {
 					validator_contract_address: "Address 2",
 					dispute_contract_address: "Address 2",
 					descartesv2_contract_address: "Address 2",
-					descartes_hash,
+					rollups_hash,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}
@@ -112,7 +112,7 @@ module.exports = {
 					descartesv2_contract_address: "Address 1",
 					input_contract_address: "Address 1",
 					epochInputStateId: epochInputId1,
-					descartes_hash,
+					rollups_hash: rollups_hash,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}
@@ -127,7 +127,7 @@ module.exports = {
 					id: voucherStateId,
 					voucher_address: "voucher address 1",
 					vouchers: `{ "intger": { "integer": { "integer": false } } }`,
-					descartes_hash,
+					rollups_hash,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}
@@ -136,12 +136,12 @@ module.exports = {
 		);
 
 		await queryInterface.bulkInsert(
-			"DescartesV2States",
+			"RollupsStates",
 			[
 				{
 					id: uuidv4(),
-					block_hash: descartes_hash,
-					constants: [immutableStateId1, immutableStateId2],
+					block_hash: rollups_hash,
+					constants: immutableStateId1,
 					initial_epoch: "1234567890",
 					current_epoch: accumulatingEpochId,
 					current_phase: "InputAccumulation",
@@ -155,6 +155,6 @@ module.exports = {
 	},
 
 	down: async (queryInterface, Sequelize) => {
-		await queryInterface.bulkDelete("VoucherStates", null, {});
+		await queryInterface.bulkDelete("RollupsStates", null, {});
 	}
 };

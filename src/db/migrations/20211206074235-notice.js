@@ -1,35 +1,26 @@
 "use strict";
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		await queryInterface.createTable("DescartesV2States", {
+		await queryInterface.createTable("Notices", {
 			id: {
 				allowNull: false,
 				primaryKey: true,
 				type: Sequelize.UUID
 			},
-			block_hash: {
+			keccak: {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			constants: {
-				type: Sequelize.ARRAY(Sequelize.STRING),
-				allowNull: false
-			},
-			initial_epoch: {
+			payload: {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			current_epoch: {
-				type: Sequelize.UUID,
-				allowNull: false
-			},
-			current_phase: {
+			keccak_in_notice_hashes: {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			voucher_state: {
-				type: Sequelize.UUID,
-				allowNull: false
+			input_result_id: {
+				type: Sequelize.UUID
 			},
 			createdAt: {
 				allowNull: false,
@@ -42,6 +33,6 @@ module.exports = {
 		});
 	},
 	down: async (queryInterface, Sequelize) => {
-		await queryInterface.dropTable("DescartesV2States");
+		await queryInterface.dropTable("Notices");
 	}
 };

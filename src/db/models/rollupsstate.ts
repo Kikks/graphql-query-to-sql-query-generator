@@ -1,7 +1,7 @@
 "use strict";
 import { Model, UUID } from "sequelize";
 
-interface DescartesV2StateAttributes {
+interface RollupsStateAttributes {
 	id: string;
 	block_hash: string;
 	constants: string[];
@@ -14,8 +14,8 @@ interface DescartesV2StateAttributes {
 }
 
 module.exports = (sequelize: any, DataTypes: any) => {
-	class DescartesV2State extends Model<DescartesV2StateAttributes>
-		implements DescartesV2StateAttributes {
+	class RollupsState extends Model<RollupsStateAttributes>
+		implements RollupsStateAttributes {
 		id!: string;
 		block_hash!: string;
 		constants!: string[];
@@ -27,18 +27,18 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		updatedAt!: string;
 
 		static associate(models: any) {
-			DescartesV2State.hasMany(models.ImmutableState, {
-				foreignKey: "descartes_hash"
+			RollupsState.hasMany(models.ImmutableState, {
+				foreignKey: "rollups_hash"
 			});
-			DescartesV2State.hasOne(models.AccumulatingEpoch, {
-				foreignKey: "descartes_hash"
+			RollupsState.hasOne(models.AccumulatingEpoch, {
+				foreignKey: "rollups_hash"
 			});
-			DescartesV2State.hasOne(models.VoucherState, {
-				foreignKey: "descartes_hash"
+			RollupsState.hasOne(models.VoucherState, {
+				foreignKey: "rollups_hash"
 			});
 		}
 	}
-	DescartesV2State.init(
+	RollupsState.init(
 		{
 			id: {
 				type: DataTypes.UUID,
@@ -50,7 +50,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				type: DataTypes.STRING,
 				allowNull: false
 			},
-			constants: DataTypes.ARRAY(DataTypes.UUID),
+			constants: DataTypes.UUID,
 			initial_epoch: DataTypes.STRING,
 			current_epoch: DataTypes.UUID,
 			current_phase: DataTypes.STRING,
@@ -66,8 +66,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		},
 		{
 			sequelize,
-			modelName: "DescartesV2State"
+			modelName: "RollupsState"
 		}
 	);
-	return DescartesV2State;
+	return RollupsState;
 };

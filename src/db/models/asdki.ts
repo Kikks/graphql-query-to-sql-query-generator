@@ -3,8 +3,12 @@ import { Model, UUID } from "sequelize";
 
 interface NoticeAttributes {
 	id: string;
+	session_id: string;
+	epoch_index: string;
+	input_index: string;
+	voucher_index: string;
 	keccak: string;
-	address: string;
+	Address: string;
 	payload: string;
 	keccak_in_voucher_hashes: string;
 	input_result_id: string;
@@ -15,9 +19,13 @@ interface NoticeAttributes {
 module.exports = (sequelize: any, DataTypes: any) => {
 	class Notice extends Model<NoticeAttributes> implements NoticeAttributes {
 		id!: string;
+		session_id!: string;
+		epoch_index!: string;
+		input_index!: string;
+		voucher_index!: string;
 		keccak!: string;
+		Address!: string;
 		payload!: string;
-		address!: string;
 		keccak_in_voucher_hashes!: string;
 		input_result_id!: string;
 		createdAt!: string;
@@ -35,7 +43,31 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				defaultValue: UUID,
 				type: DataTypes.UUID
 			},
+			session_id: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				primaryKey: true
+			},
+			epoch_index: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				primaryKey: true
+			},
+			input_index: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				primaryKey: true
+			},
+			voucher_index: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				primaryKey: true
+			},
 			keccak: {
+				type: DataTypes.STRING,
+				allowNull: false
+			},
+			Address: {
 				type: DataTypes.STRING,
 				allowNull: false
 			},
@@ -43,12 +75,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				type: DataTypes.STRING,
 				allowNull: false
 			},
-			address: {
-				type: DataTypes.STRING,
-				allowNull: false
-			},
 			keccak_in_voucher_hashes: {
-				type: DataTypes.STRING,
+				type: DataTypes.UUID,
 				allowNull: false
 			},
 			input_result_id: DataTypes.UUID,

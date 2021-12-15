@@ -5,10 +5,7 @@ interface SessionStatusAttributes {
 	session_id: string;
 	active_epoch_index: number;
 	epoch_index: [number];
-	taint_status: {
-		error_code: number;
-		error_message: string;
-	};
+	taint_status: string;
 	createdAt: string;
 	updatedAt: string;
 }
@@ -19,10 +16,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		session_id!: string;
 		active_epoch_index!: number;
 		epoch_index!: [number];
-		taint_status!: {
-			error_code: number;
-			error_message: string;
-		};
+		taint_status!: string;
 		createdAt!: string;
 		updatedAt!: string;
 	}
@@ -43,7 +37,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				allowNull: false
 			},
 			taint_status: {
-				type: DataTypes.JSON,
+				type: DataTypes.STRING,
 				allowNull: false
 			},
 			createdAt: {

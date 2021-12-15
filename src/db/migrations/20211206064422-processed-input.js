@@ -7,27 +7,37 @@ module.exports = {
 				allowNull: false,
 				primaryKey: true
 			},
+			session_id: {
+				type: Sequelize.STRING,
+				allowNull: false,
+				primaryKey: true
+			},
+			epoch_index: {
+				type: Sequelize.STRING,
+				allowNull: false,
+				primaryKey: true
+			},
 			input_index: {
-				type: Sequelize.INTEGER,
-				allowNull: false
+				type: Sequelize.STRING,
+				allowNull: false,
+				primaryKey: true
 			},
 			most_recent_machine_hash: {
-				type: Sequelize.JSON,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			voucher_hashes_in_epoch: {
-				type: Sequelize.JSON,
+				type: Sequelize.UUID,
 				allowNull: false
 			},
 			notice_hashes_in_epoch: {
+				type: Sequelize.UUID,
+				allowNull: false
+			},
+			reports: {
 				type: Sequelize.JSON,
 				allowNull: false
 			},
-			// reports: {
-			// 	type: Sequelize.ARRAY(Sequelize.STRING),
-			// 	allowNull: false
-			// },
-			// result: Sequelize.UUID,
 			skip_reason: {
 				type: Sequelize.STRING,
 				allowNull: false

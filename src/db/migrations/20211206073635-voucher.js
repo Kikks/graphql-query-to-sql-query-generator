@@ -7,11 +7,31 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.UUID
 			},
+			session_id: {
+				type: Sequelize.STRING,
+				allowNull: false,
+				primaryKey: true
+			},
+			epoch_index: {
+				type: Sequelize.STRING,
+				allowNull: false,
+				primaryKey: true
+			},
+			input_index: {
+				type: Sequelize.STRING,
+				allowNull: false,
+				primaryKey: true
+			},
+			voucher_index: {
+				type: Sequelize.STRING,
+				allowNull: false,
+				primaryKey: true
+			},
 			keccak: {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			address: {
+			Address: {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
@@ -20,12 +40,10 @@ module.exports = {
 				allowNull: false
 			},
 			keccak_in_voucher_hashes: {
-				type: Sequelize.STRING,
+				type: Sequelize.UUID,
 				allowNull: false
 			},
-			input_result_id: {
-				type: Sequelize.UUID
-			},
+			input_result_id: Sequelize.UUID,
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE

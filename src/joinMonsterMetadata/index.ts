@@ -176,24 +176,6 @@ export default {
 			}
 		}
 	},
-	GetSessionStatusResponse: {
-		extensions: {
-			joinMonster: {
-				sqlTable: '"SessionStatuses"',
-				sqlPaginate: true,
-				orderBy: '"createdAt"',
-				uniqueKey: "session_id"
-			}
-		}
-	},
-	Report: {
-		extensions: {
-			joinMonster: {
-				sqlTable: '"Reports"',
-				uniqueKey: "id"
-			}
-		}
-	},
 	Notice: {
 		extensions: {
 			joinMonster: {
@@ -201,6 +183,18 @@ export default {
 				sqlPaginate: true,
 				orderBy: '"createdAt"',
 				uniqueKey: "id"
+			}
+		},
+		fields: {
+			keccak_in_notice_hashes: {
+				extensions: {
+					joinMonster: {
+						sqlTable: '"MerkleTreeProofs"',
+						uniqueKey: "id",
+						sqlJoin: (voucherTable: any, merkleTreeProofTable: any) =>
+							`${voucherTable}."keccak_in_notice_hashes" = ${merkleTreeProofTable}.id`
+					}
+				}
 			}
 		}
 	},
@@ -211,6 +205,18 @@ export default {
 				sqlPaginate: true,
 				orderBy: '"createdAt"',
 				uniqueKey: "id"
+			}
+		},
+		fields: {
+			keccak_in_voucher_hashes: {
+				extensions: {
+					joinMonster: {
+						sqlTable: '"MerkleTreeProofs"',
+						uniqueKey: "id",
+						sqlJoin: (voucherTable: any, merkleTreeProofTable: any) =>
+							`${voucherTable}."keccak_in_voucher_hashes" = ${merkleTreeProofTable}.id`
+					}
+				}
 			}
 		}
 	},
@@ -224,6 +230,26 @@ export default {
 			}
 		},
 		fields: {
+			voucher_hashes_in_machine: {
+				extensions: {
+					joinMonster: {
+						sqlTable: '"MerkleTreeProofs"',
+						uniqueKey: "id",
+						sqlJoin: (inputResultsTable: any, merkleTreeProofTable: any) =>
+							`${inputResultsTable}."voucher_hashes_in_machine" = ${merkleTreeProofTable}.id`
+					}
+				}
+			},
+			notice_hashes_in_machine: {
+				extensions: {
+					joinMonster: {
+						sqlTable: '"MerkleTreeProofs"',
+						uniqueKey: "id",
+						sqlJoin: (inputResultsTable: any, merkleTreeProofTable: any) =>
+							`${inputResultsTable}."notice_hashes_in_machine" = ${merkleTreeProofTable}.id`
+					}
+				}
+			},
 			vouchers: {
 				extensions: {
 					joinMonster: {
@@ -246,6 +272,16 @@ export default {
 			}
 		}
 	},
+	MerkleTreeProof: {
+		extensions: {
+			joinMonster: {
+				sqlTable: '"MerkleTreeProofs"',
+				sqlPaginate: true,
+				orderBy: '"createdAt"',
+				uniqueKey: "id"
+			}
+		}
+	},
 	ProcessedInput: {
 		extensions: {
 			joinMonster: {
@@ -256,13 +292,23 @@ export default {
 			}
 		},
 		fields: {
-			reports: {
+			voucher_hashes_in_epoch: {
 				extensions: {
 					joinMonster: {
-						sqlTable: '"Reports"',
+						sqlTable: '"MerkleTreeProofs"',
 						uniqueKey: "id",
-						sqlJoin: (processInputsTable: any, reportsTable: any) =>
-							`${processInputsTable}."id" = ${reportsTable}."processed_input_id"`
+						sqlJoin: (processInputsTable: any, merkleTreeProofTable: any) =>
+							`${processInputsTable}."voucher_hashes_in_epoch" = ${merkleTreeProofTable}.id`
+					}
+				}
+			},
+			notice_hashes_in_epoch: {
+				extensions: {
+					joinMonster: {
+						sqlTable: '"MerkleTreeProofs"',
+						uniqueKey: "id",
+						sqlJoin: (processInputsTable: any, merkleTreeProofTable: any) =>
+							`${processInputsTable}."notice_hashes_in_epoch" = ${merkleTreeProofTable}.id`
 					}
 				}
 			},
@@ -278,6 +324,14 @@ export default {
 			}
 		}
 	},
+	TaintStatus: {
+		joinMonster: {
+			sqlTable: '"TaintStatuses"',
+			sqlPaginate: true,
+			orderBy: '"createdAt"',
+			uniqueKey: "session_id"
+		}
+	},
 	GetEpochStatusResponse: {
 		extensions: {
 			joinMonster: {
@@ -288,6 +342,16 @@ export default {
 			}
 		},
 		fields: {
+			taint_status: {
+				extensions: {
+					joinMonster: {
+						sqlTable: '"TaintStatuses"',
+						uniqueKey: "id",
+						sqlJoin: (epochStatusTable: any, taintStatusTable: any) =>
+							`${epochStatusTable}."taint_status" = ${taintStatusTable}."id"`
+					}
+				}
+			},
 			processed_inputs: {
 				extensions: {
 					joinMonster: {
@@ -295,6 +359,28 @@ export default {
 						uniqueKey: "id",
 						sqlJoin: (epochStatusTable: any, processedInputTable: any) =>
 							`${epochStatusTable}."session_id" = ${processedInputTable}."epoch_status_id"`
+					}
+				}
+			}
+		}
+	},
+	GetSessionStatusResponse: {
+		extensions: {
+			joinMonster: {
+				sqlTable: '"SessionStatuses"',
+				sqlPaginate: true,
+				orderBy: '"createdAt"',
+				uniqueKey: "session_id"
+			}
+		},
+		fields: {
+			taint_status: {
+				extensions: {
+					joinMonster: {
+						sqlTable: '"TaintStatuses"',
+						uniqueKey: "id",
+						sqlJoin: (epochStatusResponseTable: any, taintStatusTable: any) =>
+							`${epochStatusResponseTable}."taint_status" = ${taintStatusTable}."id"`
 					}
 				}
 			}

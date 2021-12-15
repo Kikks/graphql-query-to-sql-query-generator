@@ -16,7 +16,7 @@ module.exports = {
 				allowNull: false
 			},
 			taint_status: {
-				type: Sequelize.JSON,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			createdAt: {

@@ -122,7 +122,10 @@ query rollups {
 }
 
 query getVersionNumber {
-  GetVersion
+  GetVersion {
+    id
+    version
+  }
 }
 
 query getStatus {
@@ -155,26 +158,16 @@ query getEpochStatus {
     session_id
     epoch_index
     state
-    most_recent_machine_hash {
-      data
-    }
-    most_recent_vouchers_epoch_root_hash {
-      data
-    }
-    most_recent_notices_epoch_root_hash {
-      data
-    }
+    most_recent_machine_hash 
+    most_recent_vouchers_epoch_root_hash 
+    most_recent_notices_epoch_root_hash 
     processed_inputs {
       input_index
-      most_recent_machine_hash {
-        data
-      }
+      most_recent_machine_hash 
       voucher_hashes_in_epoch {
         target_address
         log2_target_size
-        target_hash {
-          data
-        }
+        target_hash 
         sibling_hashes {
           data
         }
@@ -182,9 +175,7 @@ query getEpochStatus {
       notice_hashes_in_epoch {
         target_address
         log2_target_size
-        target_hash {
-          data
-        }
+        target_hash
       }
       reports {
         payload
@@ -193,27 +184,43 @@ query getEpochStatus {
         voucher_hashes_in_machine {
           target_address
           log2_target_size
-          target_hash {
-            data
-          }
+          target_hash
         }
         vouchers {
           keccak
-          address
+          Address
           payload
-          keccak_in_voucher_hashes
+          keccak_in_voucher_hashes {
+            id
+            target_address
+            log2_target_size
+            target_hash
+            log2_root_size
+            root_hash
+            sibling_hashes {
+              data
+            }
+          }
         }
         notice_hashes_in_machine {
           target_address
           log2_target_size
-          target_hash {
-            data
-          }
+          target_hash 
         }
         notices {
           keccak
           payload
-          keccak_in_notice_hashes
+          keccak_in_notice_hashes {
+            id
+            target_address
+            log2_target_size
+            target_hash
+            log2_root_size
+            root_hash
+            sibling_hashes {
+              data
+            }
+          }
         }
       }
       skip_reason

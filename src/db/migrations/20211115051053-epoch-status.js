@@ -3,40 +3,37 @@ module.exports = {
 	up: async (queryInterface, Sequelize) => {
 		await queryInterface.createTable("EpochStatuses", {
 			session_id: {
-				type: Sequelize.UUID,
+				type: Sequelize.STRING,
 				allowNull: false,
 				primaryKey: true
 			},
 			epoch_index: {
-				type: Sequelize.INTEGER,
-				allowNull: false
+				type: Sequelize.STRING,
+				allowNull: false,
+				primaryKey: true
 			},
 			state: {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
 			most_recent_machine_hash: {
-				type: Sequelize.JSON,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			most_recent_vouchers_epoch_root_hash: {
-				type: Sequelize.JSON,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			most_recent_notices_epoch_root_hash: {
-				type: Sequelize.JSON,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
-			// processed_inputs: {
-			// 	type: Sequelize.JSON,
-			// 	allowNull: false
-			// },
 			pending_input_count: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			taint_status: {
-				type: Sequelize.JSON,
+				type: Sequelize.UUID,
 				allowNull: false
 			},
 			createdAt: {

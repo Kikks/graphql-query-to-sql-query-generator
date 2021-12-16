@@ -324,14 +324,6 @@ export default {
 			}
 		}
 	},
-	TaintStatus: {
-		joinMonster: {
-			sqlTable: '"TaintStatuses"',
-			sqlPaginate: true,
-			orderBy: '"createdAt"',
-			uniqueKey: "session_id"
-		}
-	},
 	GetEpochStatusResponse: {
 		extensions: {
 			joinMonster: {
@@ -342,16 +334,6 @@ export default {
 			}
 		},
 		fields: {
-			taint_status: {
-				extensions: {
-					joinMonster: {
-						sqlTable: '"TaintStatuses"',
-						uniqueKey: "id",
-						sqlJoin: (epochStatusTable: any, taintStatusTable: any) =>
-							`${epochStatusTable}."taint_status" = ${taintStatusTable}."id"`
-					}
-				}
-			},
 			processed_inputs: {
 				extensions: {
 					joinMonster: {
@@ -371,18 +353,6 @@ export default {
 				sqlPaginate: true,
 				orderBy: '"createdAt"',
 				uniqueKey: "session_id"
-			}
-		},
-		fields: {
-			taint_status: {
-				extensions: {
-					joinMonster: {
-						sqlTable: '"TaintStatuses"',
-						uniqueKey: "id",
-						sqlJoin: (epochStatusResponseTable: any, taintStatusTable: any) =>
-							`${epochStatusResponseTable}."taint_status" = ${taintStatusTable}."id"`
-					}
-				}
 			}
 		}
 	},

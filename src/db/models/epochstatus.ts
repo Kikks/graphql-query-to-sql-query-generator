@@ -16,7 +16,10 @@ interface EpochStatusAttributes {
 	most_recent_vouchers_epoch_root_hash: string;
 	most_recent_notices_epoch_root_hash: string;
 	pending_input_count: string;
-	taint_status: string;
+	taint_status: {
+		eror_code: number;
+		error_message: string;
+	};
 	createdAt: string;
 	updatedAt: string;
 }
@@ -31,7 +34,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		most_recent_vouchers_epoch_root_hash!: string;
 		most_recent_notices_epoch_root_hash!: string;
 		pending_input_count!: string;
-		taint_status!: string;
+		taint_status!: {
+			eror_code: number;
+			error_message: string;
+		};
 		createdAt!: string;
 		updatedAt!: string;
 
@@ -44,7 +50,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 	EpochStatus.init(
 		{
 			session_id: {
-				type: DataTypes.STRING,
+				type: DataTypes.UUID,
 				allowNull: false,
 				primaryKey: true
 			},
@@ -73,7 +79,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				allowNull: false
 			},
 			taint_status: {
-				type: DataTypes.UUID,
+				type: DataTypes.JSON,
 				allowNull: false
 			},
 			createdAt: {

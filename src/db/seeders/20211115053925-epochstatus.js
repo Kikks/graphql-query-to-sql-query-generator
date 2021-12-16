@@ -1,12 +1,9 @@
 "use strict";
 const { v4: uuidv4 } = require("uuid");
 
-const epoch_status_id = uuidv4();
+const epoch_status_id = "42b22569-118b-4232-8cad-8957baecf507";
 const processed_input_id = uuidv4();
 const input_result_id = uuidv4();
-
-const taintStatusId1 = uuidv4();
-const taintStatusId2 = uuidv4();
 
 const MerkleTreeProofId1 = uuidv4();
 const MerkleTreeProofId2 = uuidv4();
@@ -17,27 +14,6 @@ const MerkleTreeProofId6 = uuidv4();
 
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		await queryInterface.bulkInsert(
-			"TaintStatuses",
-			[
-				{
-					id: taintStatusId1,
-					error_code: 200,
-					error_message: "Successful",
-					createdAt: new Date(),
-					updatedAt: new Date()
-				},
-				{
-					id: taintStatusId2,
-					error_code: 400,
-					error_message: "Error",
-					createdAt: new Date(),
-					updatedAt: new Date()
-				}
-			],
-			{}
-		);
-
 		await queryInterface.bulkInsert(
 			"MerkleTreeProofs",
 			[
@@ -146,7 +122,10 @@ module.exports = {
 					most_recent_vouchers_epoch_root_hash: "A recent voucher hash",
 					most_recent_notices_epoch_root_hash: "A recent notice hash",
 					pending_input_count: "2",
-					taint_status: taintStatusId1,
+					taint_status: `{
+						"error_code": 200,
+						"error_message": "Successful"
+					}`,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				},
@@ -158,7 +137,10 @@ module.exports = {
 					most_recent_vouchers_epoch_root_hash: "A recent voucher hash",
 					most_recent_notices_epoch_root_hash: "A recent notice hash",
 					pending_input_count: "2",
-					taint_status: taintStatusId2,
+					taint_status: `{
+						"error_code": 200,
+						"error_message": "Successful"
+					}`,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}

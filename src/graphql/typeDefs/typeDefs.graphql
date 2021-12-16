@@ -97,7 +97,6 @@ type GetStatusResponse {
 }
 
 type TaintStatus {
-	id: ID!
 	error_code: Int!
 	error_message: String!
 }

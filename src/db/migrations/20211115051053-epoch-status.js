@@ -3,7 +3,7 @@ module.exports = {
 	up: async (queryInterface, Sequelize) => {
 		await queryInterface.createTable("EpochStatuses", {
 			session_id: {
-				type: Sequelize.STRING,
+				type: Sequelize.UUID,
 				allowNull: false,
 				primaryKey: true
 			},
@@ -33,7 +33,7 @@ module.exports = {
 				allowNull: false
 			},
 			taint_status: {
-				type: Sequelize.UUID,
+				type: Sequelize.JSON,
 				allowNull: false
 			},
 			createdAt: {

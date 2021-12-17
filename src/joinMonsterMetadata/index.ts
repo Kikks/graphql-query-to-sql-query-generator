@@ -20,36 +20,54 @@ export default {
 			GetProcessedInput: {
 				extensions: {
 					joinMonster: {
-						where: (table: any, args: any) =>
-							Object.entries(args.query)
-								.map(
-									query => `${table}.${query[0]} = '${query[1]}'`
-								)
-								.join(" AND ")
+						where: (table: any, args: any) => {
+							const validQueries = [];
+							for (const item of Object.entries(args.query)) {
+								if (item[1] !== "") {
+									validQueries.push(item);
+								}
+							}
+
+							return validQueries
+								.map(query => `${table}.${query[0]} = '${query[1]}'`)
+								.join(" AND ");
+						}
 					}
 				}
 			},
 			GetVoucher: {
 				extensions: {
 					joinMonster: {
-						where: (table: any, args: any) =>
-							Object.entries(args.query)
-								.map(
-									query => `${table}.${query[0]} = '${query[1]}'`
-								)
-								.join(" AND ")
+						where: (table: any, args: any) => {
+							const validQueries = [];
+							for (const item of Object.entries(args.query)) {
+								if (item[1] !== "") {
+									validQueries.push(item);
+								}
+							}
+
+							return validQueries
+								.map(query => `${table}.${query[0]} = '${query[1]}'`)
+								.join(" AND ");
+						}
 					}
 				}
 			},
 			GetNotice: {
 				extensions: {
 					joinMonster: {
-						where: (table: any, args: any) =>
-							Object.entries(args.query)
-								.map(
-									query => `${table}.${query[0]} = '${query[1]}'`
-								)
-								.join(" AND ")
+						where: (table: any, args: any) => {
+							const validQueries = [];
+							for (const item of Object.entries(args.query)) {
+								if (item[1] !== "") {
+									validQueries.push(item);
+								}
+							}
+
+							return validQueries
+								.map(query => `${table}.${query[0]} = '${query[1]}'`)
+								.join(" AND ");
+						}
 					}
 				}
 			}

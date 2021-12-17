@@ -16,6 +16,42 @@ export default {
 							`${table}.session_id = '${args.query.session_id}'`
 					}
 				}
+			},
+			GetProcessedInput: {
+				extensions: {
+					joinMonster: {
+						where: (table: any, args: any) =>
+							Object.entries(args.query)
+								.map(
+									query => `${table}.${query[0]} = '${query[1]}'`
+								)
+								.join(" AND ")
+					}
+				}
+			},
+			GetVoucher: {
+				extensions: {
+					joinMonster: {
+						where: (table: any, args: any) =>
+							Object.entries(args.query)
+								.map(
+									query => `${table}.${query[0]} = '${query[1]}'`
+								)
+								.join(" AND ")
+					}
+				}
+			},
+			GetNotice: {
+				extensions: {
+					joinMonster: {
+						where: (table: any, args: any) =>
+							Object.entries(args.query)
+								.map(
+									query => `${table}.${query[0]} = '${query[1]}'`
+								)
+								.join(" AND ")
+					}
+				}
 			}
 		}
 	},

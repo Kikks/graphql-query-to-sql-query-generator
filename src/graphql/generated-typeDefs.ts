@@ -219,9 +219,9 @@ export type IntegerObjectInput = {
 };
 
 export type Keys = {
-  epoch_index: Scalars['String'];
-  input_index: Scalars['String'];
-  session_id: Scalars['String'];
+  epoch_index?: Maybe<Scalars['String']>;
+  input_index?: Maybe<Scalars['String']>;
+  session_id?: Maybe<Scalars['String']>;
 };
 
 export type MerkleTreeProof = {
@@ -320,12 +320,12 @@ export type ProcessedInput = {
 export type Query = {
   __typename?: 'Query';
   GetEpochStatus: GetEpochStatusResponse;
-  GetNotice: Notice;
-  GetProcessedInput: ProcessedInput;
+  GetNotice?: Maybe<Array<Maybe<Notice>>>;
+  GetProcessedInput?: Maybe<Array<Maybe<ProcessedInput>>>;
   GetSessionStatus: GetSessionStatusResponse;
   GetStatus: GetStatusResponse;
   GetVersion: Version;
-  GetVoucher: Voucher;
+  GetVoucher?: Maybe<Array<Maybe<Voucher>>>;
   RollupsState: Array<Maybe<RollupsState>>;
   constants: Array<Maybe<ImmutableState>>;
   current_epoch: Array<Maybe<AccumulatingEpoch>>;
@@ -342,12 +342,12 @@ export type QueryGetEpochStatusArgs = {
 
 
 export type QueryGetNoticeArgs = {
-  query: Keys;
+  query?: Maybe<Keys>;
 };
 
 
 export type QueryGetProcessedInputArgs = {
-  query: Keys;
+  query?: Maybe<Keys>;
 };
 
 
@@ -357,7 +357,7 @@ export type QueryGetSessionStatusArgs = {
 
 
 export type QueryGetVoucherArgs = {
-  query: Keys;
+  query?: Maybe<Keys>;
 };
 
 export type Report = {
@@ -767,12 +767,12 @@ export type ProcessedInputResolvers<ContextType = any, ParentType extends Resolv
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   GetEpochStatus?: Resolver<ResolversTypes['GetEpochStatusResponse'], ParentType, ContextType, RequireFields<QueryGetEpochStatusArgs, 'query'>>;
-  GetNotice?: Resolver<ResolversTypes['Notice'], ParentType, ContextType, RequireFields<QueryGetNoticeArgs, 'query'>>;
-  GetProcessedInput?: Resolver<ResolversTypes['ProcessedInput'], ParentType, ContextType, RequireFields<QueryGetProcessedInputArgs, 'query'>>;
+  GetNotice?: Resolver<Maybe<Array<Maybe<ResolversTypes['Notice']>>>, ParentType, ContextType, RequireFields<QueryGetNoticeArgs, never>>;
+  GetProcessedInput?: Resolver<Maybe<Array<Maybe<ResolversTypes['ProcessedInput']>>>, ParentType, ContextType, RequireFields<QueryGetProcessedInputArgs, never>>;
   GetSessionStatus?: Resolver<ResolversTypes['GetSessionStatusResponse'], ParentType, ContextType, RequireFields<QueryGetSessionStatusArgs, 'query'>>;
   GetStatus?: Resolver<ResolversTypes['GetStatusResponse'], ParentType, ContextType>;
   GetVersion?: Resolver<ResolversTypes['Version'], ParentType, ContextType>;
-  GetVoucher?: Resolver<ResolversTypes['Voucher'], ParentType, ContextType, RequireFields<QueryGetVoucherArgs, 'query'>>;
+  GetVoucher?: Resolver<Maybe<Array<Maybe<ResolversTypes['Voucher']>>>, ParentType, ContextType, RequireFields<QueryGetVoucherArgs, never>>;
   RollupsState?: Resolver<Array<Maybe<ResolversTypes['RollupsState']>>, ParentType, ContextType>;
   constants?: Resolver<Array<Maybe<ResolversTypes['ImmutableState']>>, ParentType, ContextType>;
   current_epoch?: Resolver<Array<Maybe<ResolversTypes['AccumulatingEpoch']>>, ParentType, ContextType>;

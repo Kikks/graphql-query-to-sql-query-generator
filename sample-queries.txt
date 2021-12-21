@@ -350,7 +350,6 @@ query getNotice {
     input_index
     notice_index
     keccak
-    Address
     payload
     keccak_in_notice_hashes {
       id

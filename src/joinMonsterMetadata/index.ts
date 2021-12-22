@@ -246,7 +246,7 @@ export default {
 				sqlTable: '"Notices"',
 				sqlPaginate: true,
 				orderBy: '"createdAt"',
-				uniqueKey: "session_id"
+				uniqueKey: ["session_id", "epoch_index", "input_index"]
 			}
 		},
 		fields: {
@@ -268,7 +268,7 @@ export default {
 				sqlTable: '"Vouchers"',
 				sqlPaginate: true,
 				orderBy: '"createdAt"',
-				uniqueKey: "session_id"
+				uniqueKey: ["session_id", "epoch_index", "input_index"]
 			}
 		},
 		fields: {
@@ -318,7 +318,7 @@ export default {
 				extensions: {
 					joinMonster: {
 						sqlTable: '"Vouchers"',
-						uniqueKey: "session_id",
+						uniqueKey: ["session_id", "epoch_index", "input_index"],
 						sqlJoin: (inputResultsTable: any, voucherTable: any) =>
 							`${inputResultsTable}."session_id" = ${voucherTable}."session_id"`
 					}
@@ -328,7 +328,7 @@ export default {
 				extensions: {
 					joinMonster: {
 						sqlTable: '"Notices"',
-						uniqueKey: "session_id",
+						uniqueKey: ["session_id", "epoch_index", "input_index"],
 						sqlJoin: (inputResultsTable: any, noticesTable: any) =>
 							`${inputResultsTable}."session_id" = ${noticesTable}."session_id"`
 					}
@@ -352,7 +352,7 @@ export default {
 				sqlTable: '"ProcessedInputs"',
 				sqlPaginate: true,
 				orderBy: '"createdAt"',
-				uniqueKey: "session_id"
+				uniqueKey: ["session_id", "epoch_index", "input_index"]
 			}
 		},
 		fields: {
@@ -380,7 +380,7 @@ export default {
 				extensions: {
 					joinMonster: {
 						sqlTable: '"InputResults"',
-						uniqueKey: "session_id",
+						uniqueKey: ["session_id", "epoch_index", "input_index"],
 						sqlJoin: (processInputsTable: any, inputResultsTable: any) =>
 							`${processInputsTable}."session_id" = ${inputResultsTable}."session_id"`
 					}
@@ -394,7 +394,7 @@ export default {
 				sqlTable: '"EpochStatuses"',
 				sqlPaginate: true,
 				orderBy: '"createdAt"',
-				uniqueKey: "session_id"
+				uniqueKey: ["session_id", "epoch_index"]
 			}
 		},
 		fields: {
@@ -402,7 +402,7 @@ export default {
 				extensions: {
 					joinMonster: {
 						sqlTable: '"ProcessedInputs"',
-						uniqueKey: "session_id",
+						uniqueKey: ["session_id", "epoch_index", "input_index"],
 						sqlJoin: (epochStatusTable: any, processedInputTable: any) =>
 							`${epochStatusTable}."session_id" = ${processedInputTable}."session_id"`
 					}

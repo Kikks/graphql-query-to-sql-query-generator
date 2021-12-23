@@ -37,7 +37,6 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			epoch_status_id: Sequelize.UUID,
 			createdAt: {
 				type: Sequelize.DATE
 			},

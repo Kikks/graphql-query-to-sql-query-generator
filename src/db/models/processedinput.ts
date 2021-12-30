@@ -74,7 +74,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			},
 			skip_reason: {
 				type: DataTypes.STRING,
-				allowNull: false
+				allowNull: true
 			},
 			createdAt: {
 				type: DataTypes.DATE

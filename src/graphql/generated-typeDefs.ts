@@ -229,7 +229,7 @@ export type MerkleTreeProof = {
   log2_root_size: Scalars['String'];
   log2_target_size: Scalars['String'];
   root_hash: Scalars['String'];
-  sibling_hashes: Array<Maybe<Hash>>;
+  sibling_hashes: Array<Maybe<Array<Maybe<Scalars['Int']>>>>;
   target_address: Scalars['String'];
   target_hash: Scalars['String'];
 };
@@ -734,7 +734,7 @@ export type MerkleTreeProofResolvers<ContextType = any, ParentType extends Resol
   log2_root_size?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   log2_target_size?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   root_hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  sibling_hashes?: Resolver<Array<Maybe<ResolversTypes['Hash']>>, ParentType, ContextType>;
+  sibling_hashes?: Resolver<Array<Maybe<Array<Maybe<ResolversTypes['Int']>>>>, ParentType, ContextType>;
   target_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   target_hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

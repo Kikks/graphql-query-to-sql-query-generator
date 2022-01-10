@@ -28,7 +28,7 @@ module.exports = {
 				allowNull: false
 			},
 			sibling_hashes: {
-				type: Sequelize.JSON,
+				type: Sequelize.ARRAY(Sequelize.ARRAY(Sequelize.INTEGER)),
 				allowNull: false
 			},
 			createdAt: {

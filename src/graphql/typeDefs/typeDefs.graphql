@@ -123,7 +123,7 @@ type MerkleTreeProof {
 	target_hash: String!
 	log2_root_size: String!
 	root_hash: String!
-	sibling_hashes: [Hash]!
+	sibling_hashes: [[Int]]!
 }
 
 enum EpochState {

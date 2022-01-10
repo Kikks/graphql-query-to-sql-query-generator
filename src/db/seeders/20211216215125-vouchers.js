@@ -3,7 +3,6 @@ const { v4: uuidv4 } = require("uuid");
 
 const voucherId = "33f88ffc-3818-4e3e-9af2-c7d8c790638f";
 
-
 const session_id = "e9f1061b-3319-4e0f-86ab-4c12177fa71a";
 const epoch_index = "5f6278bf-9272-462e-b435-80b443a10c24";
 const input_index = "acf3bd3d-1d71-4adb-8b4a-e895055de961";
@@ -23,11 +22,10 @@ module.exports = {
 					target_hash: "A target hash",
 					log2_root_size: "Another size",
 					root_hash: "A root hash",
-					sibling_hashes: `[
-						{
-							"data": "Some data"
-						}
-					]`,
+					sibling_hashes: [
+						[1, 5, 7],
+						[9, 8, 7]
+					],
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}

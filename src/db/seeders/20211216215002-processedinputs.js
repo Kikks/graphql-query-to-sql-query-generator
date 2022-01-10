@@ -20,11 +20,10 @@ module.exports = {
 					target_hash: "A target hash",
 					log2_root_size: "Another size",
 					root_hash: "A root hash",
-					sibling_hashes: `[
-						{
-							"data": "Some data"
-						}
-					]`,
+					sibling_hashes: [
+						[1, 5, 7],
+						[9, 8, 7]
+					],
 					createdAt: new Date(),
 					updatedAt: new Date()
 				},
@@ -35,11 +34,10 @@ module.exports = {
 					target_hash: "A target hash",
 					log2_root_size: "Another size",
 					root_hash: "A root hash",
-					sibling_hashes: `[
-						{
-							"data": "Some data"
-						}
-					]`,
+					sibling_hashes: [
+						[1, 5, 7],
+						[9, 8, 7]
+					],
 					createdAt: new Date(),
 					updatedAt: new Date()
 				}

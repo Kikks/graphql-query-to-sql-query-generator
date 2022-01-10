@@ -12,7 +12,7 @@ interface MerkleTreeProofAttributes {
 	target_hash: string;
 	log2_root_size: string;
 	root_hash: string;
-	sibling_hashes: [Hash];
+	sibling_hashes: number[][];
 	createdAt: string;
 	updatedAt: string;
 }
@@ -26,7 +26,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		target_hash!: string;
 		log2_root_size!: string;
 		root_hash!: string;
-		sibling_hashes!: [Hash];
+		sibling_hashes!: number[][];
 		createdAt!: string;
 		updatedAt!: string;
 
@@ -63,7 +63,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				allowNull: false
 			},
 			sibling_hashes: {
-				type: DataTypes.JSON,
+				type: DataTypes.ARRAY(DataTypes.ARRAY(DataTypes.INTEGER)),
 				allowNull: false
 			},
 			createdAt: {

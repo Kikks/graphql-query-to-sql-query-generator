@@ -15,17 +15,15 @@ export type Scalars = {
 
 export type AccumulatingEpoch = {
   __typename?: 'AccumulatingEpoch';
-  descartesv2_contract_address: Scalars['String'];
+  dapp_contract_address: Scalars['String'];
   epoch_number: Scalars['String'];
   id: Scalars['ID'];
-  input_contract_address: Scalars['String'];
   inputs: EpochInputState;
 };
 
 export type AccumulatingEpochInput = {
-  descartesv2_contract_address: Scalars['String'];
+  dapp_contract_address: Scalars['String'];
   epoch_number: Scalars['String'];
-  input_contract_address: Scalars['String'];
   inputs: EpochInputStateInput;
 };
 
@@ -46,13 +44,11 @@ export type EpochInputState = {
   __typename?: 'EpochInputState';
   epoch_number: Scalars['String'];
   id: Scalars['ID'];
-  input_contract_address: Scalars['String'];
   inputs: Array<Maybe<Input>>;
 };
 
 export type EpochInputStateInput = {
   epoch_number: Scalars['String'];
-  input_contract_address: Scalars['String'];
   inputs: Array<Maybe<InputData>>;
 };
 
@@ -81,18 +77,16 @@ export type FinalizedEpochInput = {
 
 export type FinalizedEpochs = {
   __typename?: 'FinalizedEpochs';
-  descartesv2_contract_address: Scalars['String'];
+  dapp_contract_address: Scalars['String'];
   finalized_epochs: Array<Maybe<FinalizedEpoch>>;
   id: Scalars['ID'];
   initial_epoch: Scalars['String'];
-  input_contract_address: Scalars['String'];
 };
 
 export type FinalizedEpochsInput = {
-  descartesv2_contract_address: Scalars['String'];
+  dapp_contract_address: Scalars['String'];
   finalized_epochs: Array<Maybe<FinalizedEpochInput>>;
   initial_epoch: Scalars['String'];
-  input_contract_address: Scalars['String'];
 };
 
 export type GetEpochStatusRequest = {
@@ -146,22 +140,16 @@ export type ImmutableState = {
   __typename?: 'ImmutableState';
   challenge_period: Scalars['String'];
   contract_creation_timestamp: Scalars['String'];
-  descartesv2_contract_address: Scalars['String'];
-  dispute_contract_address: Scalars['String'];
+  dapp_contract_address: Scalars['String'];
   id: Scalars['ID'];
-  input_contract_address: Scalars['String'];
   input_duration: Scalars['String'];
-  validator_contract_address: Scalars['String'];
   voucher_contract_address: Scalars['String'];
 };
 
 export type ImmutableStateInput = {
   challenge_period: Scalars['String'];
-  descartesv2_contract_address: Scalars['String'];
-  dispute_contract_address: Scalars['String'];
-  input_contract_address: Scalars['String'];
+  dapp_contract_address: Scalars['String'];
   input_duration: Scalars['String'];
-  validator_contract_address: Scalars['String'];
   voucher_contract_address: Scalars['String'];
 };
 
@@ -604,10 +592,9 @@ export type ResolversParentTypes = {
 };
 
 export type AccumulatingEpochResolvers<ContextType = any, ParentType extends ResolversParentTypes['AccumulatingEpoch'] = ResolversParentTypes['AccumulatingEpoch']> = {
-  descartesv2_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  dapp_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   epoch_number?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  input_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   inputs?: Resolver<ResolversTypes['EpochInputState'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -620,7 +607,6 @@ export type CartesiMachineHashResolvers<ContextType = any, ParentType extends Re
 export type EpochInputStateResolvers<ContextType = any, ParentType extends ResolversParentTypes['EpochInputState'] = ResolversParentTypes['EpochInputState']> = {
   epoch_number?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  input_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   inputs?: Resolver<Array<Maybe<ResolversTypes['Input']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -636,11 +622,10 @@ export type FinalizedEpochResolvers<ContextType = any, ParentType extends Resolv
 };
 
 export type FinalizedEpochsResolvers<ContextType = any, ParentType extends ResolversParentTypes['FinalizedEpochs'] = ResolversParentTypes['FinalizedEpochs']> = {
-  descartesv2_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  dapp_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   finalized_epochs?: Resolver<Array<Maybe<ResolversTypes['FinalizedEpoch']>>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   initial_epoch?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  input_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -685,12 +670,9 @@ export type HashResolvers<ContextType = any, ParentType extends ResolversParentT
 export type ImmutableStateResolvers<ContextType = any, ParentType extends ResolversParentTypes['ImmutableState'] = ResolversParentTypes['ImmutableState']> = {
   challenge_period?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   contract_creation_timestamp?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  descartesv2_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  dispute_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  dapp_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  input_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   input_duration?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  validator_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   voucher_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

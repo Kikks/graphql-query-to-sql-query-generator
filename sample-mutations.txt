@@ -8,7 +8,7 @@ mutation createImmutableState {
         voucher_contract_address: "An Address"
         validator_contract_address: "An Address"
         dispute_contract_address: "An Address"
-        descartesv2_contract_address: "An Address"
+        dapp_contract_address: "An Address"
       }
       {
         input_duration: 1222
@@ -17,7 +17,7 @@ mutation createImmutableState {
         voucher_contract_address: "An Address"
         validator_contract_address: "An Address"
         dispute_contract_address: "An Address"
-        descartesv2_contract_address: "An Address"
+        dapp_contract_address: "An Address"
       }
     ]
   ) {
@@ -29,7 +29,7 @@ mutation createImmutableState {
     voucher_contract_address
     validator_contract_address
     dispute_contract_address
-    descartesv2_contract_address
+    dapp_contract_address
   }
 }
 
@@ -38,7 +38,7 @@ mutation crateFinalizedEpochs {
     input: [
       {
         initial_epoch: "33"
-        descartesv2_contract_address: "An address"
+        dapp_contract_address: "An address"
         input_contract_address: "Another address"
         finalized_epochs: [
           {
@@ -82,7 +82,7 @@ mutation crateFinalizedEpochs {
       finalized_block_number
     }
     initial_epoch
-    descartesv2_contract_address
+    dapp_contract_address
     input_contract_address
   }
 }
@@ -91,7 +91,7 @@ mutation crateAccumulatingEpoch {
   current_epoch(
     input: {
       epoch_number: "1000"
-      descartesv2_contract_address: "An Address"
+      dapp_contract_address: "An Address"
       inputs: {
         epoch_number: "2000"
         input_contract_address: "Another Address again"
@@ -116,7 +116,7 @@ mutation crateAccumulatingEpoch {
       }
       input_contract_address
     }
-    descartesv2_contract_address
+    dapp_contract_address
     input_contract_address
   }
 }
@@ -152,7 +152,7 @@ mutation createDescartes {
           voucher_contract_address: "An Address"
           validator_contract_address: "An Address"
           dispute_contract_address: "An Address"
-          descartesv2_contract_address: "An Address"
+          dapp_contract_address: "An Address"
         }
         {
           input_duration: 5678
@@ -161,13 +161,13 @@ mutation createDescartes {
           voucher_contract_address: "An Address"
           validator_contract_address: "An Address"
           dispute_contract_address: "An Address"
-          descartesv2_contract_address: "An Address"
+          dapp_contract_address: "An Address"
         }
       ]
       initial_epoch: "1234567890"
       current_epoch: {
         epoch_number: "1000"
-        descartesv2_contract_address: "An Address"
+        dapp_contract_address: "An Address"
         inputs: {
           epoch_number: "2000"
           input_contract_address: "Another Address again"
@@ -204,7 +204,7 @@ mutation createDescartes {
       voucher_contract_address
       validator_contract_address
       dispute_contract_address
-      descartesv2_contract_address
+      dapp_contract_address
     }
     initial_epoch
     current_epoch {
@@ -221,7 +221,7 @@ mutation createDescartes {
         }
         input_contract_address
       }
-      descartesv2_contract_address
+      dapp_contract_address
       input_contract_address
     }
     voucher_state {

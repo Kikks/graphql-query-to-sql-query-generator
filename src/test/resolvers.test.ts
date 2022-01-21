@@ -16,7 +16,7 @@ const constantsMutation = `
 					output_contract_address: "An Address"
 					validator_contract_address: "An Address"
 					dispute_contract_address: "An Address"
-					descartesv2_contract_address: "An Address"
+					dapp_contract_address: "An Address"
 				}
 				{
 					input_duration: "15"
@@ -26,7 +26,7 @@ const constantsMutation = `
 					output_contract_address: "An Address"
 					validator_contract_address: "An Address"
 					dispute_contract_address: "An Address"
-					descartesv2_contract_address: "An Address"
+					dapp_contract_address: "An Address"
 				}
 			]
 		) {
@@ -38,7 +38,7 @@ const constantsMutation = `
 			output_contract_address
 			validator_contract_address
 			dispute_contract_address
-			descartesv2_contract_address
+			dapp_contract_address
 		}
 	}
 `;
@@ -49,7 +49,7 @@ const finalizedEpochsMutation = `
 			input: [
 				{
 					initial_epoch: "33"
-					descartesv2_contract_address: "An address"
+					dapp_contract_address: "An address"
 					input_contract_address: "Another address"
 					finalized_epochs: [
 						{
@@ -88,7 +88,7 @@ const finalizedEpochsMutation = `
 				finalized_block_number
 			}
 			initial_epoch
-			descartesv2_contract_address
+			dapp_contract_address
 			input_contract_address
 			
 		}
@@ -99,7 +99,7 @@ const currentEpochMutation = `
   mutation crateAccumulatingEpoch {
 		current_epoch (input: {
 			epoch_number: "1000"
-			descartesv2_contract_address: "An Address"
+			dapp_contract_address: "An Address"
 			inputs: {
 				epoch_number:"2000"
 				input_contract_address: "Another Address again"
@@ -126,7 +126,7 @@ const currentEpochMutation = `
 				inputs
 				input_contract_address
 			}
-			descartesv2_contract_address
+			dapp_contract_address
 			input_contract_address
 		}
 	}
@@ -160,7 +160,7 @@ const descartesMutation = `
 						output_contract_address: "An Address"
 						validator_contract_address: "An Address"
 						dispute_contract_address: "An Address"
-						descartesv2_contract_address: "An Address"
+						dapp_contract_address: "An Address"
 					}
 					{
 						input_duration: "15"
@@ -170,14 +170,14 @@ const descartesMutation = `
 						output_contract_address: "An Address"
 						validator_contract_address: "An Address"
 						dispute_contract_address: "An Address"
-						descartesv2_contract_address: "An Address"
+						dapp_contract_address: "An Address"
 					}
 				]
 				initial_epoch: "1234567890"
 				finalized_epochs: [
 					{
 						initial_epoch: "33"
-						descartesv2_contract_address: "An address"
+						dapp_contract_address: "An address"
 						input_contract_address: "Another address"
 						finalized_epochs: [
 							{
@@ -202,7 +202,7 @@ const descartesMutation = `
 				]
 				current_epoch: {
 					epoch_number: "1000"
-					descartesv2_contract_address: "An Address"
+					dapp_contract_address: "An Address"
 					inputs: {
 						epoch_number: "2000"
 						input_contract_address: "Another Address again"
@@ -238,7 +238,7 @@ const descartesMutation = `
 				output_contract_address
 				validator_contract_address
 				dispute_contract_address
-				descartesv2_contract_address
+				dapp_contract_address
 			}
 			initial_epoch
 			finalized_epochs {
@@ -257,7 +257,7 @@ const descartesMutation = `
 					finalized_block_number
 				}
 				initial_epoch
-				descartesv2_contract_address
+				dapp_contract_address
 				input_contract_address
 			}
 			current_epoch {
@@ -269,7 +269,7 @@ const descartesMutation = `
 					inputs
 					input_contract_address
 				}
-				descartesv2_contract_address
+				dapp_contract_address
 				input_contract_address
 			}
 			output_state {
@@ -299,7 +299,7 @@ const constantsQuery = `
 			output_contract_address
 			validator_contract_address
 			dispute_contract_address
-			descartesv2_contract_address
+			dapp_contract_address
 		}
 	}
 `;
@@ -322,7 +322,7 @@ const finalizedEpochsQuery = `
 				finalized_block_number
 			}
 			initial_epoch
-			descartesv2_contract_address
+			dapp_contract_address
 			input_contract_address
 		}
 	}
@@ -339,7 +339,7 @@ const currentEpochQuery = `
 				inputs
 				input_contract_address
 			}
-			descartesv2_contract_address
+			dapp_contract_address
 			input_contract_address
 		}
 	}
@@ -374,7 +374,7 @@ const descartesQuery = `
 				output_contract_address
 				validator_contract_address
 				dispute_contract_address
-				descartesv2_contract_address
+				dapp_contract_address
 			}
 			initial_epoch
 			finalized_epochs {
@@ -393,7 +393,7 @@ const descartesQuery = `
 					finalized_block_number
 				}
 				initial_epoch
-				descartesv2_contract_address
+				dapp_contract_address
 				input_contract_address
 			}
 			current_epoch {
@@ -405,7 +405,7 @@ const descartesQuery = `
 					inputs
 					input_contract_address
 				}
-				descartesv2_contract_address
+				dapp_contract_address
 				input_contract_address
 			}
 			output_state {

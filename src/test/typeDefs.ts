@@ -11,7 +11,7 @@ export default gql`
 		output_contract_address: String!
 		validator_contract_address: String!
 		dispute_contract_address: String!
-		descartesv2_contract_address: String!
+		dapp_contract_address: String!
 	}
 
 	type Input {
@@ -42,7 +42,7 @@ export default gql`
 		id: ID!
 		finalized_epochs: [FinalizedEpoch]!
 		initial_epoch: String!
-		descartesv2_contract_address: String!
+		dapp_contract_address: String!
 		input_contract_address: String!
 	}
 
@@ -50,7 +50,7 @@ export default gql`
 		id: ID!
 		epoch_number: String!
 		inputs: EpochInputState!
-		descartesv2_contract_address: String!
+		dapp_contract_address: String!
 		input_contract_address: String!
 	}
 
@@ -90,7 +90,7 @@ export default gql`
 		output_contract_address: String!
 		validator_contract_address: String!
 		dispute_contract_address: String!
-		descartesv2_contract_address: String!
+		dapp_contract_address: String!
 	}
 
 	input InputData {
@@ -115,13 +115,13 @@ export default gql`
 
 	input FinalizedEpochsInput {
 		initial_epoch: String!
-		descartesv2_contract_address: String!
+		dapp_contract_address: String!
 		input_contract_address: String!
 		finalized_epochs: [FinalizedEpochInput]!
 	}
 	input AccumulatingEpochInput {
 		epoch_number: String!
-		descartesv2_contract_address: String!
+		dapp_contract_address: String!
 		input_contract_address: String!
 		inputs: EpochInputStateInput!
 	}

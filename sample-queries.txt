@@ -9,7 +9,7 @@ query constants {
     voucher_contract_address
     validator_contract_address
     dispute_contract_address
-    descartesv2_contract_address
+    dapp_contract_address
   }
 }
 
@@ -35,7 +35,7 @@ query finalized_epochs {
       finalized_block_number
     }
     initial_epoch
-    descartesv2_contract_address
+    dapp_contract_address
     input_contract_address
   }
 }
@@ -55,7 +55,7 @@ query current_epoch {
       }
       input_contract_address
     }
-    descartesv2_contract_address
+    dapp_contract_address
     input_contract_address
   }
 }
@@ -87,7 +87,7 @@ query rollups {
       voucher_contract_address
       validator_contract_address
       dispute_contract_address
-      descartesv2_contract_address
+      dapp_contract_address
     }
     initial_epoch
     current_epoch {
@@ -104,7 +104,7 @@ query rollups {
         }
         input_contract_address
       }
-      descartesv2_contract_address
+      dapp_contract_address
       input_contract_address
     }
     voucher_state {

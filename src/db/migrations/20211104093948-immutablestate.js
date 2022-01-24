@@ -20,23 +20,11 @@ module.exports = {
 				type: Sequelize.DATE,
 				allowNull: false
 			},
-			input_contract_address: {
-				type: Sequelize.STRING,
-				allowNull: false
-			},
 			voucher_contract_address: {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			validator_contract_address: {
-				type: Sequelize.STRING,
-				allowNull: false
-			},
-			dispute_contract_address: {
-				type: Sequelize.STRING,
-				allowNull: false
-			},
-			descartesv2_contract_address: {
+			dapp_contract_address: {
 				type: Sequelize.STRING,
 				allowNull: false
 			},

@@ -9,11 +9,8 @@ type ImmutableState {
 	input_duration: String!
 	challenge_period: String!
 	contract_creation_timestamp: String!
-	input_contract_address: String!
 	voucher_contract_address: String!
-	validator_contract_address: String!
-	dispute_contract_address: String!
-	descartesv2_contract_address: String!
+	dapp_contract_address: String!
 }
 
 type Input {
@@ -27,7 +24,6 @@ type EpochInputState {
 	id: ID!
 	epoch_number: String!
 	inputs: [Input]!
-	input_contract_address: String!
 }
 
 type FinalizedEpoch {
@@ -43,16 +39,14 @@ type FinalizedEpochs {
 	id: ID!
 	finalized_epochs: [FinalizedEpoch]!
 	initial_epoch: String!
-	descartesv2_contract_address: String!
-	input_contract_address: String!
+	dapp_contract_address: String!
 }
 
 type AccumulatingEpoch {
 	id: ID!
 	epoch_number: String!
 	inputs: EpochInputState!
-	descartesv2_contract_address: String!
-	input_contract_address: String!
+	dapp_contract_address: String!
 }
 
 enum PhaseState {
@@ -210,11 +204,8 @@ input ImmutableStateInput {
 	input_duration: String!
 	challenge_period: String!
 	# contract_creation_timestamp: String!
-	input_contract_address: String!
 	voucher_contract_address: String!
-	validator_contract_address: String!
-	dispute_contract_address: String!
-	descartesv2_contract_address: String!
+	dapp_contract_address: String!
 }
 
 input InputData {
@@ -226,7 +217,6 @@ input InputData {
 input EpochInputStateInput {
 	epoch_number: String!
 	inputs: [InputData]!
-	input_contract_address: String!
 }
 
 input FinalizedEpochInput {
@@ -239,14 +229,12 @@ input FinalizedEpochInput {
 
 input FinalizedEpochsInput {
 	initial_epoch: String!
-	descartesv2_contract_address: String!
-	input_contract_address: String!
+	dapp_contract_address: String!
 	finalized_epochs: [FinalizedEpochInput]!
 }
 input AccumulatingEpochInput {
 	epoch_number: String!
-	descartesv2_contract_address: String!
-	input_contract_address: String!
+	dapp_contract_address: String!
 	inputs: EpochInputStateInput!
 }
 

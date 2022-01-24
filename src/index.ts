@@ -43,36 +43,33 @@ app.use("/graphql", (req: Request, res: Response, next: NextFunction) => {
 			const elapsedHrTime = process.hrtime(startHrTime);
 			const elapsedTimeInMs = elapsedHrTime[0] * 1000 + elapsedHrTime[1] / 1e6;
 
-			await redisClient.set(
-				"response_times",
-				JSON.stringify([elapsedTimeInMs])
-			);
+			try {
+				const data = await redisClient.get("response_times");
+				console.log(data);
 
-			// redisClient.get("response_times", function(err: any, reply: any) {
-			// 	if (err) throw err;
+				if (data) {
+					const responseTimes: number[] = JSON.parse(data);
 
-			// 	console.log(elapsedTimeInMs);
+					if (responseTimes.length >= 100) {
+						responseTimes.pop();
+						responseTimes.unshift(elapsedTimeInMs);
+					} else {
+						responseTimes.unshift(elapsedTimeInMs);
+					}
 
-			// 	if (reply) {
-			// 		console.log(reply);
-			// 		const responseTimes: number[] = JSON.parse(reply);
-
-			// 		if (responseTimes.length >= 100) {
-			// 			responseTimes.pop();
-			// 			responseTimes.unshift(elapsedTimeInMs);
-			// 		} else {
-			// 			responseTimes.unshift(elapsedTimeInMs);
-			// 		}
-			// 	} else {
-			// 		redisClient.set(
-			// 			"response_times",
-			// 			JSON.stringify([elapsedTimeInMs]),
-			// 			function(err: any, reply: any) {
-			// 				console.log(reply);
-			// 			}
-			// 		);
-			// 	}
-			// });
+					await redisClient.set(
+						"response_times",
+						JSON.stringify(responseTimes)
+					);
+				} else {
+					await redisClient.set(
+						"response_times",
+						JSON.stringify([elapsedTimeInMs])
+					);
+				}
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	});
 

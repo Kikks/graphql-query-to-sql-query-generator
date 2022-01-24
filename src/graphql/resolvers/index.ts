@@ -27,12 +27,17 @@ import {
 import joinMonster from "join-monster";
 import db from "../../db/models";
 
+// Metrics
+import { answeredQueryCounter } from "../../utils/metrics";
+
 export const UserResolvers: IResolvers = {
 	Query: {
 		async constants(_: void, args, {}, info): Promise<ImmutableState> {
 			try {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);
+
+					answeredQueryCounter.inc();
 
 					return db.sequelize.query(sql, {
 						type: db.sequelize.QueryTypes.SELECT
@@ -44,6 +49,7 @@ export const UserResolvers: IResolvers = {
 		},
 
 		initial_epoch(): string {
+			answeredQueryCounter.inc();
 			return "234567890";
 		},
 
@@ -52,6 +58,7 @@ export const UserResolvers: IResolvers = {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);
 
+					answeredQueryCounter.inc();
 					return db.sequelize.query(sql, {
 						type: db.sequelize.QueryTypes.SELECT
 					});
@@ -62,6 +69,7 @@ export const UserResolvers: IResolvers = {
 		},
 
 		current_phase(): PhaseState {
+			answeredQueryCounter.inc();
 			return PhaseState.AwaitingConsensusAfterConflict;
 		},
 
@@ -69,6 +77,8 @@ export const UserResolvers: IResolvers = {
 			try {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);
+
+					answeredQueryCounter.inc();
 
 					return db.sequelize.query(sql, {
 						type: db.sequelize.QueryTypes.SELECT
@@ -84,6 +94,8 @@ export const UserResolvers: IResolvers = {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);
 
+					answeredQueryCounter.inc();
+
 					return db.sequelize.query(sql, {
 						type: db.sequelize.QueryTypes.SELECT
 					});
@@ -97,6 +109,8 @@ export const UserResolvers: IResolvers = {
 			try {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);
+
+					answeredQueryCounter.inc();
 
 					return db.sequelize.query(sql, {
 						type: db.sequelize.QueryTypes.SELECT
@@ -112,6 +126,8 @@ export const UserResolvers: IResolvers = {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);
 
+					answeredQueryCounter.inc();
+
 					return db.sequelize.query(sql, {
 						type: db.sequelize.QueryTypes.SELECT
 					});
@@ -122,6 +138,7 @@ export const UserResolvers: IResolvers = {
 		},
 
 		GetStatus(): GetStatusResponse {
+			answeredQueryCounter.inc();
 			return {
 				session_id: [uuidv4(), uuidv4(), uuidv4()]
 			};
@@ -136,6 +153,8 @@ export const UserResolvers: IResolvers = {
 			try {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);
+
+					answeredQueryCounter.inc();
 
 					return db.sequelize.query(sql, {
 						type: db.sequelize.QueryTypes.SELECT
@@ -156,6 +175,7 @@ export const UserResolvers: IResolvers = {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);
 
+					answeredQueryCounter.inc();
 					return db.sequelize.query(sql, {
 						type: db.sequelize.QueryTypes.SELECT
 					});
@@ -175,6 +195,8 @@ export const UserResolvers: IResolvers = {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);
 
+					answeredQueryCounter.inc();
+
 					return db.sequelize.query(sql, {
 						type: db.sequelize.QueryTypes.SELECT
 					});
@@ -189,6 +211,8 @@ export const UserResolvers: IResolvers = {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);
 
+					answeredQueryCounter.inc();
+
 					return db.sequelize.query(sql, {
 						type: db.sequelize.QueryTypes.SELECT
 					});
@@ -202,6 +226,8 @@ export const UserResolvers: IResolvers = {
 			try {
 				return joinMonster(info, args, (sql: any) => {
 					console.log(sql);
+
+					answeredQueryCounter.inc();
 
 					return db.sequelize.query(sql, {
 						type: db.sequelize.QueryTypes.SELECT
@@ -237,6 +263,8 @@ export const UserResolvers: IResolvers = {
 					data.push(newData);
 				}
 
+				answeredQueryCounter.inc();
+
 				return data;
 			} catch (error: any) {
 				throw Error(error);
@@ -244,6 +272,7 @@ export const UserResolvers: IResolvers = {
 		},
 
 		initial_epoch(_: void, { input }: { input: string }): string {
+			answeredQueryCounter.inc();
 			return input;
 		},
 
@@ -317,6 +346,7 @@ export const UserResolvers: IResolvers = {
 					data.push(finalizedEpochs);
 				}
 
+				answeredQueryCounter.inc();
 				return data;
 			} catch (error: any) {
 				throw new Error(error);
@@ -369,6 +399,8 @@ export const UserResolvers: IResolvers = {
 					inputs: inputsArray
 				};
 
+				answeredQueryCounter.inc();
+
 				return accumulatingEpoch;
 			} catch (error: any) {
 				throw new Error(error);
@@ -376,6 +408,7 @@ export const UserResolvers: IResolvers = {
 		},
 
 		current_phase(_: void, { input }: { input: PhaseState }): PhaseState {
+			answeredQueryCounter.inc();
 			return input;
 		},
 
@@ -392,6 +425,7 @@ export const UserResolvers: IResolvers = {
 					updatedAt: new Date()
 				});
 
+				answeredQueryCounter.inc();
 				return VoucherState;
 			} catch (error: any) {
 				throw new Error(error);
@@ -519,6 +553,8 @@ export const UserResolvers: IResolvers = {
 					createdAt: new Date(),
 					updatedAt: new Date()
 				});
+
+				answeredQueryCounter.inc();
 
 				return {
 					id: rollups_id,

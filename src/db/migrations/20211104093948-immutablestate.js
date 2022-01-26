@@ -20,10 +20,6 @@ module.exports = {
 				type: Sequelize.DATE,
 				allowNull: false
 			},
-			voucher_contract_address: {
-				type: Sequelize.STRING,
-				allowNull: false
-			},
 			dapp_contract_address: {
 				type: Sequelize.STRING,
 				allowNull: false

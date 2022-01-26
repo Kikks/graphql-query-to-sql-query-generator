@@ -11,7 +11,6 @@ module.exports = {
 					input_duration: "An Input duration",
 					challenge_period: "A challenge period",
 					contract_creation_timestamp: new Date(),
-					voucher_contract_address: "Address 1",
 					dapp_contract_address: "Address 1",
 					createdAt: new Date(),
 					updatedAt: new Date()
@@ -21,7 +20,6 @@ module.exports = {
 					input_duration: "An Input duration",
 					challenge_period: "A challenge period",
 					contract_creation_timestamp: new Date(),
-					voucher_contract_address: "Address 2",
 					dapp_contract_address: "Address 2",
 					createdAt: new Date(),
 					updatedAt: new Date()

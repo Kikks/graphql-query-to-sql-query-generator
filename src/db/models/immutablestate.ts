@@ -6,7 +6,6 @@ interface ImmutableStateAttributes {
 	input_duration: number;
 	challenge_period: number;
 	contract_creation_timestamp: string;
-	voucher_contract_address: string;
 	dapp_contract_address: string;
 	rollups_hash: string;
 	createdAt: string;
@@ -20,7 +19,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		input_duration!: number;
 		challenge_period!: number;
 		contract_creation_timestamp!: string;
-		voucher_contract_address!: string;
 		dapp_contract_address!: string;
 		rollups_hash!: string;
 		createdAt!: string;
@@ -48,10 +46,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			},
 			contract_creation_timestamp: {
 				type: DataTypes.DATE,
-				allowNull: false
-			},
-			voucher_contract_address: {
-				type: DataTypes.STRING,
 				allowNull: false
 			},
 			dapp_contract_address: {

@@ -9,7 +9,6 @@ type ImmutableState {
 	input_duration: String!
 	challenge_period: String!
 	contract_creation_timestamp: String!
-	voucher_contract_address: String!
 	dapp_contract_address: String!
 }
 
@@ -203,8 +202,6 @@ type GetProcessedInputsVouchersAndNotices {
 input ImmutableStateInput {
 	input_duration: String!
 	challenge_period: String!
-	# contract_creation_timestamp: String!
-	voucher_contract_address: String!
 	dapp_contract_address: String!
 }
 

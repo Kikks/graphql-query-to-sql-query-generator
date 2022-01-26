@@ -255,7 +255,6 @@ export const UserResolvers: IResolvers = {
 						contract_creation_timestamp: new Date(),
 						dapp_contract_address: item?.dapp_contract_address,
 						input_duration: item?.input_duration,
-						voucher_contract_address: item?.voucher_contract_address,
 						createdAt: new Date(),
 						updatedAt: new Date()
 					});
@@ -469,8 +468,6 @@ export const UserResolvers: IResolvers = {
 						contract_creation_timestamp: new Date(),
 						dapp_contract_address: input?.constants?.dapp_contract_address,
 						input_duration: input?.constants?.input_duration,
-						voucher_contract_address:
-							input?.constants?.voucher_contract_address,
 						rollups_hash,
 						createdAt: new Date(),
 						updatedAt: new Date()

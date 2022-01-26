@@ -4,13 +4,11 @@ mutation createImmutableState {
       {
         input_duration: "1222"
         challenge_period: "1222"
-        voucher_contract_address: "An Address"
         dapp_contract_address: "An Address"
       }
       {
         input_duration: "1222"
         challenge_period: "1333"
-        voucher_contract_address: "An Address"
         dapp_contract_address: "An Address"
       }
     ]
@@ -19,7 +17,6 @@ mutation createImmutableState {
     input_duration
     challenge_period
     contract_creation_timestamp
-    voucher_contract_address
     dapp_contract_address
   }
 }
@@ -130,7 +127,6 @@ mutation createDescartes {
       constants: {
         input_duration: "5678"
         challenge_period: "5678"
-        voucher_contract_address: "An Address"
         dapp_contract_address: "An address"
       }
       initial_epoch: "1234567890"
@@ -167,7 +163,6 @@ mutation createDescartes {
       input_duration
       challenge_period
       contract_creation_timestamp
-      voucher_contract_address
       dapp_contract_address
     }
     initial_epoch

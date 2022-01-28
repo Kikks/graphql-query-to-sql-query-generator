@@ -143,14 +143,12 @@ export type ImmutableState = {
   dapp_contract_address: Scalars['String'];
   id: Scalars['ID'];
   input_duration: Scalars['String'];
-  voucher_contract_address: Scalars['String'];
 };
 
 export type ImmutableStateInput = {
   challenge_period: Scalars['String'];
   dapp_contract_address: Scalars['String'];
   input_duration: Scalars['String'];
-  voucher_contract_address: Scalars['String'];
 };
 
 export type Input = {
@@ -220,6 +218,15 @@ export type MerkleTreeProof = {
   sibling_hashes: Array<Maybe<Array<Maybe<Scalars['Int']>>>>;
   target_address: Scalars['String'];
   target_hash: Scalars['String'];
+};
+
+export type Metrics = {
+  __typename?: 'Metrics';
+  block_hash?: Maybe<Scalars['String']>;
+  block_number?: Maybe<Scalars['String']>;
+  dapp_contract_address?: Maybe<Scalars['String']>;
+  number_of_processed_inputs?: Maybe<Scalars['Int']>;
+  prometheus_metrics?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -322,6 +329,7 @@ export type Query = {
   current_epoch: Array<Maybe<AccumulatingEpoch>>;
   current_phase: Array<Maybe<PhaseState>>;
   finalized_epochs: Array<Maybe<FinalizedEpochs>>;
+  getMetrics?: Maybe<Metrics>;
   initial_epoch: Scalars['String'];
   voucher_state: Array<Maybe<VoucherState>>;
 };
@@ -522,6 +530,7 @@ export type ResolversTypes = {
   IntegerObjectInput: IntegerObjectInput;
   Keys: Keys;
   MerkleTreeProof: ResolverTypeWrapper<MerkleTreeProof>;
+  Metrics: ResolverTypeWrapper<Metrics>;
   Mutation: ResolverTypeWrapper<{}>;
   Notice: ResolverTypeWrapper<Notice>;
   NoticeKeys: NoticeKeys;
@@ -574,6 +583,7 @@ export type ResolversParentTypes = {
   IntegerObjectInput: IntegerObjectInput;
   Keys: Keys;
   MerkleTreeProof: MerkleTreeProof;
+  Metrics: Metrics;
   Mutation: {};
   Notice: Notice;
   NoticeKeys: NoticeKeys;
@@ -673,7 +683,6 @@ export type ImmutableStateResolvers<ContextType = any, ParentType extends Resolv
   dapp_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   input_duration?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  voucher_contract_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -719,6 +728,15 @@ export type MerkleTreeProofResolvers<ContextType = any, ParentType extends Resol
   sibling_hashes?: Resolver<Array<Maybe<Array<Maybe<ResolversTypes['Int']>>>>, ParentType, ContextType>;
   target_address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   target_hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MetricsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Metrics'] = ResolversParentTypes['Metrics']> = {
+  block_hash?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  block_number?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  dapp_contract_address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  number_of_processed_inputs?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  prometheus_metrics?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -769,6 +787,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   current_epoch?: Resolver<Array<Maybe<ResolversTypes['AccumulatingEpoch']>>, ParentType, ContextType>;
   current_phase?: Resolver<Array<Maybe<ResolversTypes['PhaseState']>>, ParentType, ContextType>;
   finalized_epochs?: Resolver<Array<Maybe<ResolversTypes['FinalizedEpochs']>>, ParentType, ContextType>;
+  getMetrics?: Resolver<Maybe<ResolversTypes['Metrics']>, ParentType, ContextType>;
   initial_epoch?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   voucher_state?: Resolver<Array<Maybe<ResolversTypes['VoucherState']>>, ParentType, ContextType>;
 };
@@ -838,6 +857,7 @@ export type Resolvers<ContextType = any> = {
   IntegerInnerObject?: IntegerInnerObjectResolvers<ContextType>;
   IntegerObject?: IntegerObjectResolvers<ContextType>;
   MerkleTreeProof?: MerkleTreeProofResolvers<ContextType>;
+  Metrics?: MetricsResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Notice?: NoticeResolvers<ContextType>;
   ProcessedInput?: ProcessedInputResolvers<ContextType>;

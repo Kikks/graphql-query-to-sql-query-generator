@@ -332,3 +332,13 @@ query getNotice {
     }
   }
 }
+
+query getMetrics {
+  getMetrics {
+    block_number
+    block_hash
+    number_of_processed_inputs
+    dapp_contract_address
+    prometheus_metrics
+  }
+}

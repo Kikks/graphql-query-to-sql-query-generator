@@ -198,6 +198,14 @@ type GetProcessedInputsVouchersAndNotices {
 	report: Report
 }
 
+type Metrics {
+	block_number: String
+	block_hash: String
+	number_of_processed_inputs: Int
+	dapp_contract_address: String
+	prometheus_metrics: String
+}
+
 # Mutation Inputs
 input ImmutableStateInput {
 	input_duration: String!
@@ -305,6 +313,7 @@ type Query {
 	GetProcessedInput(query: Keys): [ProcessedInput]
 	GetVoucher(query: VoucherKeys): [Voucher]
 	GetNotice(query: NoticeKeys): [Notice]
+	getMetrics: Metrics
 }
 
 type Mutation {

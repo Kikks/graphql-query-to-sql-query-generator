@@ -22,13 +22,65 @@ import {
 	Notice,
 	GetStatusResponse,
 	GetSessionStatusResponse,
-	GetEpochStatusResponse
+	GetEpochStatusResponse,
+	Metrics
 } from "../generated-typeDefs";
 import joinMonster from "join-monster";
 import db from "../../db/models";
 
 // Metrics
-import { answeredQueryCounter } from "../../utils/metrics";
+import { answeredQueryCounter, PromClient } from "../../utils/metrics";
+
+const getFinalizedEpochsDetails = async () => {
+	try {
+		const latestFinalizedEpochs = await db.FinalizedEpochs.findOne({
+			order: [["createdAt", "DESC"]]
+		});
+
+		if (latestFinalizedEpochs) {
+			const dapp_contract_address =
+				latestFinalizedEpochs?.dapp_contract_address;
+			let block_number: string | null = null;
+			let block_hash: string | null = null;
+			let number_of_processed_inputs: number | null = null;
+
+			const latestFinalizedEpoch = await db.FinalizedEpoch.findOne({
+				where: { FinalizedEpochId: latestFinalizedEpochs?.id },
+				order: [["createdAt", "DESC"]]
+			});
+
+			if (latestFinalizedEpoch) {
+				block_number = latestFinalizedEpoch?.finalized_block_number;
+				block_hash = latestFinalizedEpoch?.finalized_block_hash;
+
+				const epochInputStates = await db.EpochInputState.findAll({
+					where: { id: latestFinalizedEpoch?.epochInputStateId },
+					order: [["createdAt", "DESC"]]
+				});
+
+				number_of_processed_inputs = epochInputStates.length;
+			}
+
+			return {
+				block_number,
+				block_hash,
+				number_of_processed_inputs,
+				dapp_contract_address
+			};
+		} else {
+			return {
+				block_number: null,
+				block_hash: null,
+				number_of_processed_inputs: null,
+				dapp_contract_address: null
+			};
+		}
+	} catch (error: any) {
+		throw new Error(
+			error || "There was an error while getting Finalized Epoch Details"
+		);
+	}
+};
 
 export const UserResolvers: IResolvers = {
 	Query: {
@@ -233,6 +285,31 @@ export const UserResolvers: IResolvers = {
 						type: db.sequelize.QueryTypes.SELECT
 					});
 				});
+			} catch (error: any) {
+				throw Error(error);
+			}
+		},
+
+		async getMetrics(): Promise<Metrics> {
+			try {
+				const collectDefaultMetrics = PromClient.collectDefaultMetrics;
+				collectDefaultMetrics();
+				const metrics = await PromClient.register.metrics();
+
+				const {
+					block_number,
+					block_hash,
+					number_of_processed_inputs,
+					dapp_contract_address
+				} = await getFinalizedEpochsDetails();
+				
+				return {
+					block_hash,
+					block_number,
+					number_of_processed_inputs,
+					dapp_contract_address,
+					prometheus_metrics: metrics
+				}
 			} catch (error: any) {
 				throw Error(error);
 			}
